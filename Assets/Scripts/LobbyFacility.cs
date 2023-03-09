@@ -6,4 +6,6 @@ public class LobbyFacility : MonoBehaviour
 {
     public enum FacilityType { Inventory, Sever, RestoreStation}
     public FacilityType facilityType;
+
+    public Transform FocusPos;
 }

@@ -8,13 +8,18 @@ public class LobbyCameraController : MonoBehaviour
     int i = 3;
     Vector3 velo = Vector3.zero;
 
+    public Transform FocusPos;
+
     void Start()
     {
     }
 
     void Update()
     {
-        transform.position = Vector3.SmoothDamp(transform.position, rooms[i].Find("CamPos").position, ref velo, 0.1f);
+        if (FocusPos == null)
+            transform.position = Vector3.SmoothDamp(transform.position, rooms[i].Find("CamPos").position, ref velo, 0.1f);
+        else
+            transform.position = Vector3.SmoothDamp(transform.position, FocusPos.position, ref velo, 0.1f);
     }
 
     public void MoveLobbyCam(int _index) {
