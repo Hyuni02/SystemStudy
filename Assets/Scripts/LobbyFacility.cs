@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LobbyFacility : MonoBehaviour
 {
-    public enum FacilityType { Inventory, Sever, RestoreStation}
+    public enum FacilityType { Inventory, Sever, RestoreStation, Counter, Table}
     public FacilityType facilityType;
 
     public Transform FocusPos;
