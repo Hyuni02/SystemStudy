@@ -1055,6 +1055,7 @@ GameObject:
   - component: {fileID: 234471157}
   - component: {fileID: 234471158}
   - component: {fileID: 234471159}
+  - component: {fileID: 234471160}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1213,6 +1214,21 @@ MonoBehaviour:
   - {fileID: 167919041}
   - {fileID: 611475853}
   - {fileID: 1410303090}
+--- !u!114 &234471160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234471152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eec0aa00e7147c4fb47b136e13ebeee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pre_Button: {fileID: 3420898743806043673, guid: d58f663f036ea5747aa0ea2e8675849e,
+    type: 3}
+  Panel_SaleList: {fileID: 2082576179}
 --- !u!1 &241189946
 GameObject:
   m_ObjectHideFlags: 0
@@ -8986,6 +9002,7 @@ GameObject:
   - component: {fileID: 2082576179}
   - component: {fileID: 2082576181}
   - component: {fileID: 2082576180}
+  - component: {fileID: 2082576182}
   m_Layer: 5
   m_Name: Panel_Sale
   m_TagString: Untagged
@@ -9010,7 +9027,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 455, y: -369.07}
+  m_AnchoredPosition: {x: 455, y: -360}
   m_SizeDelta: {x: 890, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2082576180
@@ -9051,6 +9068,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2082576178}
   m_CullTransparentMesh: 1
+--- !u!114 &2082576182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2082576178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 10
+    m_Right: 10
+    m_Top: 10
+    m_Bottom: 10
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 120, y: 120}
+  m_Spacing: {x: 10, y: 10}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1 &2085023171
 GameObject:
   m_ObjectHideFlags: 0
