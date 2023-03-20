@@ -17,7 +17,7 @@ public class LoadStoreItemList : MonoBehaviour
 
     public void UpdateStoreItemList() {
 
-        List<Dictionary<string, object>> Data_Sale = CSVReader.Read("StoreItems");
+        List<Dictionary<string, object>> Data_Sale = CSVReader.Read("StoreItemsData");
 
         foreach (var item in Data_Sale) {
             //print(item["Code"].ToString() + " : " + item["Cost"].ToString());
