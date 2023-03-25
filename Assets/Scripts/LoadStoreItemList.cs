@@ -24,7 +24,8 @@ public class LoadStoreItemList : MonoBehaviour
             GameObject button = Instantiate(pre_Button);
             button.transform.SetParent(Panel_SaleList, false);
             button.name = item["Code"].ToString();
-            button.transform.GetChild(0).GetComponent<TMP_Text>().SetText(item["Code"].ToString());
+            string itemName = GetComponent<LoadItemData>().Data_Item.Find(x => x.code == int.Parse(item["Code"].ToString())).name;
+            button.transform.GetChild(0).GetComponent<TMP_Text>().SetText(itemName);
             button.transform.GetChild(1).GetComponent<TMP_Text>().SetText(item["Cost"].ToString());
             
             //버튼 이미지 가져오기
@@ -40,6 +41,7 @@ public class LoadStoreItemList : MonoBehaviour
 
         //debug
         TMP_Text txt_name = GetComponent<LobbyInventoryController>().txt_Name;
-        txt_name.SetText(code);
+        string itemName = GetComponent<LoadItemData>().Data_Item.Find(x => x.code == int.Parse(code)).name;
+        txt_name.SetText(itemName);
     }
 }

@@ -11,6 +11,7 @@ using UnityEngine.UI;
 using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 using Newtonsoft.Json;
+using static UnityEditor.Progress;
 
 [Serializable]
 public class InvenInfo { 
@@ -76,19 +77,27 @@ public class LobbyInventoryController : MonoBehaviour
         print("Click : " + code);
 
         //debug
-        txt_Name.SetText(code);
+        string itemName = GetComponent<LoadItemData>().Data_Item.Find(x => x.code == int.Parse(code)).name;
+        txt_Name.SetText(itemName);
     }
     void ShowItems() {
+        for(int i=0;i<Content_LobbyInventory.childCount;i++) {
+            Destroy(Content_LobbyInventory.GetChild(i).gameObject);    
+        }
+
         foreach (var item in Data_LInven) {
-            GameObject button = Instantiate(pre_Button);
-            button.transform.SetParent(Content_LobbyInventory, false);
-            button.name = item.code.ToString();
-            button.transform.GetChild(0).GetComponent<TMP_Text>().SetText(item.code.ToString());
+            for (int i = 0; i < item.count; i++) {
+                GameObject button = Instantiate(pre_Button);
+                button.transform.SetParent(Content_LobbyInventory, false);
+                button.name = item.code.ToString();
+                string itemName = GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.code).name;
+                button.transform.GetChild(0).GetComponent<TMP_Text>().SetText(itemName);
 
-            //버튼 이미지 가져오기
-            Debug.LogWarning("Load Item Image is not realized");
+                //버튼 이미지 가져오기
+                Debug.LogWarning("Load Item Image is not realized");
 
-            button.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(button.name));
+                button.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(button.name));
+            }
         }
     }
 
@@ -112,6 +121,7 @@ public class LobbyInventoryController : MonoBehaviour
             item.count++;
             print(item.count.ToString());
         }
+        ShowItems();
         SaveLobbyInventory();
     }
     public void Debug_RemoveItem() {
@@ -123,6 +133,7 @@ public class LobbyInventoryController : MonoBehaviour
             }
             print(item.count.ToString());
         }
+        ShowItems();
         SaveLobbyInventory();
     }
 }

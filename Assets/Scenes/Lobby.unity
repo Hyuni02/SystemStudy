@@ -1134,6 +1134,7 @@ GameObject:
   - component: {fileID: 234471159}
   - component: {fileID: 234471160}
   - component: {fileID: 234471161}
+  - component: {fileID: 234471162}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1327,8 +1328,20 @@ MonoBehaviour:
     type: 3}
   Panel_LobbyInventory: {fileID: 1238283683}
   Content_LobbyInventory: {fileID: 69776837}
-  slots: []
   Data_LInven: []
+--- !u!114 &234471162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 234471152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec595ea8f6909ac45b6f20d0eeb4e26d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data_Items: {fileID: 4900000, guid: 548bcef8f713e0f448e1310ab978ca34, type: 3}
 --- !u!1 &241189946
 GameObject:
   m_ObjectHideFlags: 0
@@ -6727,7 +6740,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 22
   m_Viewport: {fileID: 1065680619}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1173764024}
@@ -6830,13 +6843,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 69776837}
-  m_Horizontal: 1
+  m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 22
   m_Viewport: {fileID: 1689629651}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1119254019}
