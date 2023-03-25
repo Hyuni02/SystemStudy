@@ -37,5 +37,9 @@ public class LoadStoreItemList : MonoBehaviour
 
     void ButtonClicked(string code) {
         print("Click : " + code);
+
+        //debug
+        TMP_Text txt_name = GetComponent<LobbyInventoryController>().txt_Name;
+        txt_name.SetText(code);
     }
 }
