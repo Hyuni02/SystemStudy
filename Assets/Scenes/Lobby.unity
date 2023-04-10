@@ -1132,9 +1132,9 @@ GameObject:
   - component: {fileID: 234471157}
   - component: {fileID: 234471158}
   - component: {fileID: 234471159}
+  - component: {fileID: 234471162}
   - component: {fileID: 234471160}
   - component: {fileID: 234471161}
-  - component: {fileID: 234471162}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1321,6 +1321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lobbyInvenData: {fileID: 4900000, guid: 6d54e87d3d467b04aafcf99676f147e8, type: 3}
+  selectedCode: 0
   btn_Get: {fileID: 1198645545}
   btn_Remove: {fileID: 435317599}
   txt_Name: {fileID: 1215563833}
@@ -1342,6 +1343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Data_Items: {fileID: 4900000, guid: 548bcef8f713e0f448e1310ab978ca34, type: 3}
+  Data_Item: []
 --- !u!1 &241189946
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,6 +39,7 @@ public class LoadStoreItemList : MonoBehaviour
 
     void ButtonClicked(string code) {
         print("Click : " + code);
+        GetComponent<LobbyInventoryController>().selectedCode = int.Parse(code);
 
         //debug
         TMP_Text txt_name = GetComponent<LobbyInventoryController>().txt_Name;
