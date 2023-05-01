@@ -13,7 +13,10 @@
 2601	[조명]	1	1	false	light
 2602	[레이저]	1	1	false	razor
 2603	[복합조명]	1	1	false	both
-2701	[탄창]	1	2	true	30	5	1
+2701	[탄창45]	1	2	true	30	acp	5	1
+2702	[탄창9]	1	2	true	30	para	5	1
+2703	[탄창556]	1	2	true	30	nato5	5	1
+2704	[탄창762]	1	2	true	30	nato7	5	1
 2801	[.45]	0.1	0.1	true	acp
 2802	[9mm]	0.1	0.1	true	para
 2803	[5.56]	0.1	0.1	true	nato5
