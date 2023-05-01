@@ -10,28 +10,48 @@ public class ItemInfo {
     public float weight;
     public float volume;
     public bool stack;
+    public string[] etc;
 
-    public ItemInfo(int code, string name, float weight, float volume, bool stack) {
+    public ItemInfo(int code, string name, float weight, float volume, bool stack, string[] etc) {
         this.code = code;
         this.name = name;
         this.weight = weight;
         this.volume = volume;
         this.stack = stack;
+        this.etc = etc;
     }
 }
 
 public class LoadItemData : MonoBehaviour
 {
+    public static LoadItemData instance;
     public TextAsset Data_Items;
 
     [SerializeField]
     public List<ItemInfo> Data_Item = new List<ItemInfo>();
 
+    private void Awake() {
+        if(instance == null)
+            instance = this;
+        else
+            Destroy(this);
+    }
+
+    public ItemInfo GetItemData(int code) {
+        ItemInfo info = Data_Item.Find(x => x.code == code);
+        Debug.LogWarning("Init Item Data is not implemented");
+        return info;
+    }
+
     void Start() {
         string[] line = Data_Items.text.Substring(0, Data_Items.text.Length - 1).Split('\n');
         for (int i = 0; i < line.Length; i++) {
             string[] row = line[i].Split("\t");
-            Data_Item.Add(new ItemInfo(int.Parse(row[0]), row[1], float.Parse(row[2]), float.Parse(row[3]), bool.Parse(row[4])));
+            string[] etc = new string[row.Length - 5];
+            for (int j = 0; j < row.Length - 5; j++) {
+                etc[j] = row[5 + j];
+            }
+            Data_Item.Add(new ItemInfo(int.Parse(row[0]), row[1], float.Parse(row[2]), float.Parse(row[3]), bool.Parse(row[4]), etc));
         }
     }
 

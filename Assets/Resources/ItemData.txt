@@ -4,12 +4,25 @@
 2002	AN-94	4	4	false
 2101	[자동권총]	2	2	false
 2102	[리볼버]	2	2	false
-2201	[옵티컬]	1	1	false
-2301	[손잡이]	1	1	false
-2401	[개머리판]	1	1	false
-2501	[총구]	1	1	false
-2601	[탄창]	1	2	true
-2701	[총알]	0.1	0.1	true
-3001	[가방]	3	6	false
-4001	[헬멧]	1	3	false
-5001	[방탄]	5	4	false
+2201	[고정배율]	1	1	false	_fixed
+2202	[가변배율]	1	1	false	_dynamic
+2301	[손잡이]	1	1	false	5	5
+2401	[개머리판]	1	1	false	5	5
+2501	[보정기]	1	1	false	comp	5
+2502	[소음기]	1	1	false	silen	5
+2601	[조명]	1	1	false	light
+2602	[레이저]	1	1	false	razor
+2603	[복합조명]	1	1	false	both
+2701	[탄창]	1	2	true	30	5	1
+2801	[.45]	0.1	0.1	true	acp
+2802	[9mm]	0.1	0.1	true	para
+2803	[5.56]	0.1	0.1	true	nato5
+2804	[7.62]	0.1	0.1	true	nato7
+2805	[12gauge]	0.1	0.1	true	shell
+2901	[수류탄]	1	1	true	grenade
+2902	[섬광탄]	1	1	true	flashbang
+2903	[화염병]	1	1	true	molotov
+2904	[EMP]	1	1	true	emp
+3001	[가방]	3	6	false	30
+4001	[헬멧]	1	3	false	3	30
+5001	[방탄복]	5	4	false	4	40

@@ -88,35 +88,80 @@ public class LobbyInventoryController : MonoBehaviour
         }
 
         foreach (var item in Data_LInven) {
-            if(GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.code).stack) {
-                GameObject button = Instantiate(pre_Button);
-                button.transform.SetParent(Content_LobbyInventory, false);
-                button.name = item.code.ToString();
-                string itemName = GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.code).name;
-                button.transform.GetChild(0).GetComponent<TMP_Text>().SetText(itemName);
+            GameObject button = Instantiate(pre_Button);
+            button.transform.SetParent(Content_LobbyInventory, false);
+            button.name = item.code.ToString();
+            string itemName = GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.code).name;
+            button.transform.GetChild(0).GetComponent<TMP_Text>().SetText(itemName);
+            #region
+            int type = item.code / 1000;
+            switch (type) {
+                case 1:
+                    button.AddComponent<Item>();
+                    break;
+                case 2:
+                    int subtype = item.code / 100;
+                    switch (subtype) {
+                        case 20:
+                            button.AddComponent<Item_Primary>();
+                            break;
+                        case 21:
+                            button.AddComponent<Item_Secondary>();
+                            break;
+                        case 22:
+                            button.AddComponent<Item_UpperRail>();
+                            break;
+                        case 23:
+                            button.AddComponent<Item_UnderRail>();
+                            break;
+                        case 24:
+                            button.AddComponent<Item_Stock>();
+                            break;
+                        case 25:
+                            button.AddComponent<Item_Muzzle>();
+                            break;
+                        case 26:
+                            button.AddComponent<Item_SideRail>();
+                            break;
+                        case 27:
+                            button.AddComponent<Item_Magazine>();
+                            break;
+                        case 28:
+                            button.AddComponent<Item_Ammo>();
+                            break;
+                        case 29:
+                            button.AddComponent<Item_Throw>();
+                            break;
+                        default:
+                            Debug.LogError("Inventory Item Code Error" + item.code);
+                            break;
+                    }
+                    break;
+                case 3:
+                    button.AddComponent<Item_Bag>();
+                    break;
+                case 4:
+                    button.AddComponent<Item_Helmet>();
+                    break;
+                case 5:
+                    button.AddComponent<Item_BodyArmor>();
+                    break;
+                default:
+                    Debug.LogError("Inventory Item Code Error : " + item.code);
+                    break;
+            }
+            button.GetComponent<Item>()?.Init(item.code);
+            #endregion
+
+            //버튼에 갯수 표시
+            if (GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.code).stack) {
                 button.transform.GetChild(1).GetComponent<TMP_Text>().SetText(item.count.ToString());
-
-                //버튼에 갯수 표시
-
-                //버튼 이미지 가져오기
-                Debug.LogWarning("Load Item Image is not realized");
-
-                button.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(button.name));
             }
-            else {
-                for (int i = 0; i < item.count; i++) {
-                    GameObject button = Instantiate(pre_Button);
-                    button.transform.SetParent(Content_LobbyInventory, false);
-                    button.name = item.code.ToString();
-                    string itemName = GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.code).name;
-                    button.transform.GetChild(0).GetComponent<TMP_Text>().SetText(itemName);
+            //버튼 이미지 가져오기
+            Debug.LogWarning("Load Item Image is not realized");
 
-                    //버튼 이미지 가져오기
-                    Debug.LogWarning("Load Item Image is not realized");
+            button.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(button.name));
 
-                    button.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(button.name));
-                }
-            }
         }
     }
 
