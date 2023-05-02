@@ -132,7 +132,6 @@ public class LobbyInventoryController : MonoBehaviour
                         case 29:
                             button.AddComponent<Item_Throw>();
                             break;
-                            
                         default:
                             Debug.LogError("Inventory Item Code Error" + item.code);
                             break;
