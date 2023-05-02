@@ -160,8 +160,11 @@ public class LobbyInventoryController : MonoBehaviour
             #endregion
 
             //버튼에 갯수 표시
-            if (GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.code).stack) {
+            if (GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.code).stack != 1) {
                 button.transform.GetChild(1).GetComponent<TMP_Text>().SetText(item.count.ToString());
+            }
+            else {
+                button.transform.GetChild(1).GetComponent<TMP_Text>().SetText("");
             }
             //버튼 이미지 가져오기
             Debug.LogWarning("Load Item Image is not realized");
@@ -194,14 +197,9 @@ public class LobbyInventoryController : MonoBehaviour
     public void Debug_RemoveItem() {
         InvenInfo item = Data_LInven.Find(x => x.code == selectedCode);
         if (item != null) {
-            if(GetComponent<LoadItemData>().Data_Item.Find(x => x.code == selectedCode).stack) {
-                item.count--;
-                if(item.count <= 0)
-                    Data_LInven.Remove(item);
-            }
-            else {
+            item.count--;
+            if (item.count <= 0)
                 Data_LInven.Remove(item);
-            }
         }
         else {
             print("No Item in Inven");

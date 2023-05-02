@@ -9,10 +9,10 @@ public class ItemInfo {
     public string name;
     public float weight;
     public float volume;
-    public bool stack;
+    public int stack;
     public string[] etc;
 
-    public ItemInfo(int code, string name, float weight, float volume, bool stack, string[] etc) {
+    public ItemInfo(int code, string name, float weight, float volume, int stack, string[] etc) {
         this.code = code;
         this.name = name;
         this.weight = weight;
@@ -39,7 +39,7 @@ public class LoadItemData : MonoBehaviour
 
     public ItemInfo GetItemData(int code) {
         ItemInfo info = Data_Item.Find(x => x.code == code);
-        Debug.LogWarning("Init Item Data is not implemented");
+        //Debug.LogWarning("Init Item Data is not implemented");
         return info;
     }
 
@@ -51,7 +51,7 @@ public class LoadItemData : MonoBehaviour
             for (int j = 0; j < row.Length - 5; j++) {
                 etc[j] = row[5 + j];
             }
-            Data_Item.Add(new ItemInfo(int.Parse(row[0]), row[1], float.Parse(row[2]), float.Parse(row[3]), bool.Parse(row[4]), etc));
+            Data_Item.Add(new ItemInfo(int.Parse(row[0]), row[1], float.Parse(row[2]), float.Parse(row[3]), int.Parse(row[4]), etc));
         }
     }
 

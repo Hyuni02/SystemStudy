@@ -12,6 +12,8 @@ public class Item : MonoBehaviour
     public float volume { get; private set; }
     [field: SerializeField]
     public float weight { get; set; }
+    [field : SerializeField]
+    public int count { get; set; }
     
     //아이템 정보 초기화
     public virtual void Init(int _code) {
@@ -21,6 +23,8 @@ public class Item : MonoBehaviour
         code = data.code;
         volume = data.volume;
         weight = data.weight;
+        //count = 1;
+        Debug.LogWarning("Item Count Load 구현 필요");
     }
 
     public virtual void Interact_Pick() {
