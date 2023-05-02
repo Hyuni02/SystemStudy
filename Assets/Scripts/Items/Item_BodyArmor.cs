@@ -12,7 +12,6 @@ public class Item_BodyArmor : Item_Armor
         level = int.Parse(etc[0]);
         maxhealth = float.Parse(etc[1]);
         health = maxhealth;
-        print("Init BodyArmor : " + name);
     }
 
     public override void Click_Equip() {

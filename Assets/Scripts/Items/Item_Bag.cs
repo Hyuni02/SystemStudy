@@ -11,7 +11,6 @@ public class Item_Bag : Item_Equipment
         base.Init(_code);
         type = Type.bag;
         additional_volume = float.Parse(LoadItemData.instance.GetItemData(_code).etc[0]);
-        print("Init Bag : " + name);
     }
 
     public override void Click_Equip() {

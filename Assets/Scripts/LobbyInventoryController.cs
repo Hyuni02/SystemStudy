@@ -132,6 +132,7 @@ public class LobbyInventoryController : MonoBehaviour
                         case 29:
                             button.AddComponent<Item_Throw>();
                             break;
+                            
                         default:
                             Debug.LogError("Inventory Item Code Error" + item.code);
                             break;
@@ -145,6 +146,12 @@ public class LobbyInventoryController : MonoBehaviour
                     break;
                 case 5:
                     button.AddComponent<Item_BodyArmor>();
+                    break;
+                case 6:
+                    button.AddComponent<Item_Food>();
+                    break;
+                case 7:
+                    button.AddComponent<Item_Heal>();
                     break;
                 default:
                     Debug.LogError("Inventory Item Code Error : " + item.code);
