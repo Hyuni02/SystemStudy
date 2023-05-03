@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1320,7 +1320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dde1f68015da27742aaf55e8d395abca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lobbyInvenData: {fileID: 4900000, guid: 6d54e87d3d467b04aafcf99676f147e8, type: 3}
+  InitLobbyInvenData: {fileID: 4900000, guid: 6d54e87d3d467b04aafcf99676f147e8, type: 3}
   selectedCode: 0
   btn_Get: {fileID: 1198645545}
   btn_Remove: {fileID: 435317599}
@@ -1329,7 +1329,7 @@ MonoBehaviour:
     type: 3}
   Panel_LobbyInventory: {fileID: 1238283683}
   Content_LobbyInventory: {fileID: 69776837}
-  Data_LInven: []
+  Data_LobbyInven: []
 --- !u!114 &234471162
 MonoBehaviour:
   m_ObjectHideFlags: 0

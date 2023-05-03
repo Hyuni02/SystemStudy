@@ -24,7 +24,7 @@ public class InvenInfo {
 
 public class LobbyInventoryController : MonoBehaviour
 {
-    public TextAsset lobbyInvenData;
+    public TextAsset InitLobbyInvenData;
 
     [HideInInspector]
     public int selectedCode;
@@ -41,7 +41,7 @@ public class LobbyInventoryController : MonoBehaviour
     public Transform Content_LobbyInventory;
 
     [SerializeField]
-    public List<InvenInfo> Data_LInven;
+    public List<InvenInfo> Data_LobbyInven;
 
     public void Start() {
         LoadLobbyInventory();
@@ -59,10 +59,10 @@ public class LobbyInventoryController : MonoBehaviour
     public void LoadLobbyInventory() {
         //세이브 파일이 없을 때
         if (!File.Exists(Application.dataPath + "/Resources/LobbyInven.txt")) {
-            string[] line = lobbyInvenData.text.Substring(0, lobbyInvenData.text.Length - 1).Split('\n');
+            string[] line = InitLobbyInvenData.text.Substring(0, InitLobbyInvenData.text.Length - 1).Split('\n');
             for (int i = 0; i < line.Length; i++) {
                 string[] row = line[i].Split("\t");
-                Data_LInven.Add(new InvenInfo(int.Parse(row[0]), int.Parse(row[1])));
+                Data_LobbyInven.Add(new InvenInfo(int.Parse(row[0]), int.Parse(row[1])));
             }
             print("Create New Inventory Data File");
             SaveLobbyInventory();
@@ -70,7 +70,7 @@ public class LobbyInventoryController : MonoBehaviour
         //세이브 파일이 있을 때
         else {
             string jdata = File.ReadAllText(Application.dataPath + "/Resources/LobbyInven.txt");
-            Data_LInven = JsonConvert.DeserializeObject<List<InvenInfo>>(jdata);
+            Data_LobbyInven = JsonConvert.DeserializeObject<List<InvenInfo>>(jdata);
         }
         print("Load Lobby Inventory Data");
         ShowItems();
@@ -87,7 +87,7 @@ public class LobbyInventoryController : MonoBehaviour
             Destroy(Content_LobbyInventory.GetChild(i).gameObject);    
         }
 
-        foreach (var item in Data_LInven) {
+        foreach (var item in Data_LobbyInven) {
             GameObject button = Instantiate(pre_Button);
             button.transform.SetParent(Content_LobbyInventory, false);
             button.name = item.code.ToString();
@@ -175,7 +175,7 @@ public class LobbyInventoryController : MonoBehaviour
     }
 
     public void SaveLobbyInventory() {
-        string jdata = JsonConvert.SerializeObject(Data_LInven);
+        string jdata = JsonConvert.SerializeObject(Data_LobbyInven);
         File.WriteAllText(Application.dataPath + "/Resources/LobbyInven.txt", jdata);
 
         print("Save Lobby Inventory Data");
@@ -189,22 +189,22 @@ public class LobbyInventoryController : MonoBehaviour
     }
 
     public void Debug_GetItem() {
-        Data_LInven.Add(new InvenInfo(selectedCode, 1));
-        Data_LInven.Sort(comparel);
+        Data_LobbyInven.Add(new InvenInfo(selectedCode, 1));
+        Data_LobbyInven.Sort(comparel);
         ShowItems();
         SaveLobbyInventory();
     }
     public void Debug_RemoveItem() {
-        InvenInfo item = Data_LInven.Find(x => x.code == selectedCode);
+        InvenInfo item = Data_LobbyInven.Find(x => x.code == selectedCode);
         if (item != null) {
             item.count--;
             if (item.count <= 0)
-                Data_LInven.Remove(item);
+                Data_LobbyInven.Remove(item);
         }
         else {
             print("No Item in Inven");
         }
-        Data_LInven.Sort(comparel);
+        Data_LobbyInven.Sort(comparel);
         ShowItems();
         SaveLobbyInventory();
     }
