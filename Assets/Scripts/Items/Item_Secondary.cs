@@ -9,7 +9,7 @@ public class Item_Secondary : Item_Weapon
         base.Init(_code);
         type = Type.sec;
     }
-
+   
     public void Draw_Pri() {
 
     }

@@ -14,7 +14,10 @@ public class Item : MonoBehaviour
     public float weight { get; set; }
     [field : SerializeField]
     public int count { get; set; }
-    
+
+    protected ItemInfo_compact info;
+
+
     //아이템 정보 초기화
     public virtual void Init(int _code) {
         //print("Init : " + name);
@@ -25,6 +28,14 @@ public class Item : MonoBehaviour
         weight = data.weight;
         //count = 1;
         Debug.LogWarning("Item Count Load 구현 필요");
+    }
+
+    public virtual ItemInfo_compact GetSaveInfo() {
+        info = new ItemInfo_compact();
+        info.itemcode = code;
+        info.itemcount = count;
+        print("GetSaveInfo from Item");
+        return info;
     }
 
     public virtual void Interact_Pick() {

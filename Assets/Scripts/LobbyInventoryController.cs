@@ -11,6 +11,7 @@ using UnityEngine.InputSystem;
 using Newtonsoft.Json;
 using static UnityEditor.Progress;
 using System.ComponentModel.Design;
+using JetBrains.Annotations;
 
 [Serializable]
 public class InvenInfo { 
@@ -20,6 +21,20 @@ public class InvenInfo {
     }
     public int code; 
     public int count;
+}
+
+[Serializable]
+public class ItemInfo_compact {
+    public int itemcode;
+    public int itemcount;
+    [SerializeField]
+    public Dictionary<string, int> properties = new Dictionary<string, int>();
+}
+
+[Serializable]
+public class Class_SaveData {
+    public int money;
+    public List<ItemInfo_compact> items;
 }
 
 public class LobbyInventoryController : MonoBehaviour
@@ -42,6 +57,10 @@ public class LobbyInventoryController : MonoBehaviour
 
     [SerializeField]
     public List<InvenInfo> Data_LobbyInven;
+    [SerializeField]
+    public List<Item> Items_LobbyInven;
+    [SerializeField]
+    public List<ItemInfo_compact> SaveData;
 
     public void Start() {
         LoadLobbyInventory();
@@ -73,6 +92,7 @@ public class LobbyInventoryController : MonoBehaviour
             Data_LobbyInven = JsonConvert.DeserializeObject<List<InvenInfo>>(jdata);
         }
         print("Load Lobby Inventory Data");
+
         ShowItems();
     }
     void ButtonClicked(string code) {
@@ -86,6 +106,8 @@ public class LobbyInventoryController : MonoBehaviour
         for(int i=0;i<Content_LobbyInventory.childCount;i++) {
             Destroy(Content_LobbyInventory.GetChild(i).gameObject);    
         }
+        Items_LobbyInven.Clear();
+        SaveData.Clear();
 
         foreach (var item in Data_LobbyInven) {
             GameObject button = Instantiate(pre_Button);
@@ -159,6 +181,8 @@ public class LobbyInventoryController : MonoBehaviour
             button.GetComponent<Item>()?.Init(item.code);
             #endregion
 
+            Items_LobbyInven.Add(button.GetComponent<Item>());
+
             //버튼에 갯수 표시
             if (GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.code).stack != 1) {
                 button.transform.GetChild(1).GetComponent<TMP_Text>().SetText(item.count.ToString());
@@ -177,6 +201,16 @@ public class LobbyInventoryController : MonoBehaviour
     public void SaveLobbyInventory() {
         string jdata = JsonConvert.SerializeObject(Data_LobbyInven);
         File.WriteAllText(Application.dataPath + "/Resources/LobbyInven.txt", jdata);
+
+        Class_SaveData class_SaveData = new Class_SaveData();
+        SaveData.Clear();
+        foreach(var i in Items_LobbyInven) {
+            SaveData.Add(i.GetSaveInfo());
+        }
+        class_SaveData.money = 100;
+        class_SaveData.items = SaveData;
+        string jdata2 = JsonUtility.ToJson(class_SaveData);
+        File.WriteAllText(Application.dataPath + "/Resources/SaveData.txt", jdata2);
 
         print("Save Lobby Inventory Data");
     }
