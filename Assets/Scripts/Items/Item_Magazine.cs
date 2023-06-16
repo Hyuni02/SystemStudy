@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using static Item_Ammo;
+using UnityEditor.UIElements;
 
 public class Item_Magazine : Item_Parts
 {
@@ -12,15 +13,13 @@ public class Item_Magazine : Item_Parts
     [field : SerializeField] public int reload_reduction { get; private set; }
     [field : SerializeField] public int aim_decrease { get; private set; }
 
-    public override void Init(int _code) {
-        base.Init(_code);
+    public override void Init(ItemInfo_compact item) {
+        base.Init(item);
         mount = Mount.mag;  
-        string[] etc = LoadItemData.instance.GetItemData(_code).etc;
+        string[] etc = LoadItemData.instance.GetItemData(item.itemcode).etc;
         capacity = int.Parse(etc[0]);
-        //TODO
-        //remains = 0; //처음 생성
-        //remain = 인벤토리 데이터 불러오기 // 가지고 있던 탄창
-        gauge = (Gauge)Enum.Parse(typeof(Gauge), LoadItemData.instance.GetItemData(_code).etc[1]);
+        remains = item.properties[0].it; //인벤토리 데이터 불러오기
+        gauge = (Gauge)Enum.Parse(typeof(Gauge), LoadItemData.instance.GetItemData(item.itemcode).etc[1]);
         reload_reduction= int.Parse(etc[2]);
         aim_decrease = int.Parse(etc[3]);
     }

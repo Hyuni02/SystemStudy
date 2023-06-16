@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class Item_Helmet : Item_Armor
 {
-    public override void Init(int _code) {
-        base.Init(_code);
+    public override void Init(ItemInfo_compact item) {
+        base.Init(item);
         type = Type.helmet;
-        string[] etc = LoadItemData.instance.GetItemData(_code).etc;
-        level = int.Parse(etc[0]);
-        maxhealth = float.Parse(etc[1]);
-        health = maxhealth;
     }
 
     public override void Click_Equip() {

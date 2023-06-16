@@ -11,27 +11,26 @@ public abstract class Item_Weapon : Item_Equipment
     public int magazine;
     public int stock;
 
-    public override void Init(int _code) {
-        base.Init(_code);
-        string[] etc = LoadItemData.instance.GetItemData(_code).etc;
-        muzzle = int.Parse(etc[0]);
-        under_rail = int.Parse(etc[1]);
-        side_rail = int.Parse(etc[2]);
-        upper_rail = int.Parse(etc[3]);
-        magazine = int.Parse(etc[4]);
-        stock = int.Parse(etc[5]);
+    public override void Init(ItemInfo_compact item) {
+        base.Init(item);
+        muzzle = item.properties.Find(x => x.str.Equals("muzzle")).it;
+        under_rail = item.properties.Find(x => x.str.Equals("under_rail")).it;
+        side_rail = item.properties.Find(x => x.str.Equals("side_rail")).it;
+        upper_rail = item.properties.Find(x => x.str.Equals("upper_rail")).it;
+        magazine = item.properties.Find(x => x.str.Equals("magazine")).it;
+        stock = item.properties.Find(x => x.str.Equals("stock")).it;
     }
 
 
     public override ItemInfo_compact GetSaveInfo() {
         base.GetSaveInfo();
         info.itemcount = 1;
-        info.properties.Add("muzzle", muzzle);
-        info.properties.Add("under_rail", under_rail);
-        info.properties.Add("side_rail", side_rail);
-        info.properties.Add("upper_rail", upper_rail);
-        info.properties.Add("magazine", magazine);
-        info.properties.Add("stock", stock);
+        info.properties.Add(new StringInt("muzzle", muzzle));
+        info.properties.Add(new StringInt("under_rail", under_rail));
+        info.properties.Add(new StringInt("side_rail", side_rail));
+        info.properties.Add(new StringInt("upper_rail", upper_rail));
+        info.properties.Add(new StringInt("magazine", magazine));
+        info.properties.Add(new StringInt("stock", stock));
         print("GetSaveInfo from Weapon");
         return info;
     }

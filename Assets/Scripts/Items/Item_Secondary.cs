@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Item_Secondary : Item_Weapon
 {
-    public override void Init(int _code) {
-        base.Init(_code);
+    public override void Init(ItemInfo_compact item) {
+        base.Init(item);
         type = Type.sec;
     }
    

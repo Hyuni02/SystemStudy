@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 
 public class Item_Primary : Item_Weapon
 {
-    public override void Init(int _code) {
-        base.Init(_code);
+    public override void Init(ItemInfo_compact item) {
+        base.Init(item);
         type = Type.pri;
     }
 

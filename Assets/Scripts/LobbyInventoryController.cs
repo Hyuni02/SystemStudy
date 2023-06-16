@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using static UnityEditor.Progress;
 using System.ComponentModel.Design;
 using JetBrains.Annotations;
+using System.Linq;
 
 [Serializable]
 public class InvenInfo { 
@@ -22,13 +23,21 @@ public class InvenInfo {
     public int code; 
     public int count;
 }
-
+[Serializable]
+public class StringInt {
+    public string str;
+    public int it;
+    public StringInt(string str, int it) {
+        this.str = str;
+        this.it = it;
+    }
+}
 [Serializable]
 public class ItemInfo_compact {
     public int itemcode;
     public int itemcount;
     [SerializeField]
-    public Dictionary<string, int> properties = new Dictionary<string, int>();
+    public List<StringInt> properties = new List<StringInt>();
 }
 
 [Serializable]
@@ -37,12 +46,13 @@ public class Class_SaveData {
     public List<ItemInfo_compact> items;
 }
 
-public class LobbyInventoryController : MonoBehaviour
-{
+public class LobbyInventoryController : MonoBehaviour {
     public TextAsset InitLobbyInvenData;
 
     [HideInInspector]
     public int selectedCode;
+    [HideInInspector]
+    public int itemcount = 1;
 
     [Header("Debug Slot")]
     public Button btn_Get;
@@ -56,10 +66,6 @@ public class LobbyInventoryController : MonoBehaviour
     public Transform Content_LobbyInventory;
 
     [SerializeField]
-    public List<InvenInfo> Data_LobbyInven;
-    [SerializeField]
-    public List<Item> Items_LobbyInven;
-    [SerializeField]
     public List<ItemInfo_compact> SaveData;
 
     public void Start() {
@@ -70,59 +76,95 @@ public class LobbyInventoryController : MonoBehaviour
         if (Keyboard.current.sKey.wasPressedThisFrame) {
             SaveLobbyInventory();
         }
-        if(Keyboard.current.lKey.wasPressedThisFrame) {
+        if (Keyboard.current.lKey.wasPressedThisFrame) {
             LoadLobbyInventory();
         }
     }
 
     public void LoadLobbyInventory() {
         //세이브 파일이 없을 때
-        if (!File.Exists(Application.dataPath + "/Resources/LobbyInven.txt")) {
+        if (!File.Exists(Application.dataPath + "/Resources/SaveData.txt")) {
+            //초기화 파일 불러오기
             string[] line = InitLobbyInvenData.text.Substring(0, InitLobbyInvenData.text.Length - 1).Split('\n');
             for (int i = 0; i < line.Length; i++) {
                 string[] row = line[i].Split("\t");
-                Data_LobbyInven.Add(new InvenInfo(int.Parse(row[0]), int.Parse(row[1])));
+                ItemInfo_compact item = new ItemInfo_compact();
+                item.itemcode = int.Parse(row[0]);
+                item.itemcount = int.Parse(row[1]);
+
+                string[] props = LoadItemData.instance.Data_Item.Find(x => x.code == item.itemcode).etc;
+                #region 내부 정보 저장
+                int type = item.itemcode / 1000;
+                switch (type) {
+                    case 2:
+                        int subtype = item.itemcode / 100;
+                        switch (subtype) {
+                            case 20:
+                            case 21:
+                                item.properties.Add(new StringInt("muzzle", int.Parse(props[0])));
+                                item.properties.Add(new StringInt("under_rail", int.Parse(props[1])));
+                                item.properties.Add(new StringInt("side_rail", int.Parse(props[2])));
+                                item.properties.Add(new StringInt("upper_rail", int.Parse(props[3])));
+                                item.properties.Add(new StringInt("magazine", int.Parse(props[4])));
+                                item.properties.Add(new StringInt("stock", int.Parse(props[5])));
+                                break;
+                            case 27:
+                                item.properties.Add(new StringInt("count", 0));
+                                break;
+                        }
+                        break;
+                    case 4:
+                    case 5:
+                        item.properties.Add(new StringInt("health", int.Parse(props[1])));
+                        break;
+                }
+                #endregion
+
+                SaveData.Add(item);
             }
+
             print("Create New Inventory Data File");
             SaveLobbyInventory();
-        } 
+            LoadLobbyInventory();
+        }
         //세이브 파일이 있을 때
         else {
-            string jdata = File.ReadAllText(Application.dataPath + "/Resources/LobbyInven.txt");
-            Data_LobbyInven = JsonConvert.DeserializeObject<List<InvenInfo>>(jdata);
+            string jdata = File.ReadAllText(Application.dataPath + "/Resources/SaveData.txt");
+            Class_SaveData loadedData = JsonUtility.FromJson<Class_SaveData>(jdata);
+            //money = loadedData.money;
+            SaveData = loadedData.items;
+            print("Load Lobby Inventory Data");
         }
-        print("Load Lobby Inventory Data");
 
         ShowItems();
     }
-    void ButtonClicked(string code) {
-        print("Click : " + code);
-        selectedCode = int.Parse(code);
+    void ButtonClicked(GameObject button) {
+        print("Click : " + button.GetComponent<Item>().itemname);
+        selectedCode = button.GetComponent<Item>().code;
         //debug
-        string itemName = GetComponent<LoadItemData>().Data_Item.Find(x => x.code == int.Parse(code)).name;
+        string itemName = button.GetComponent<Item>().itemname;
         txt_Name.SetText(itemName);
     }
     void ShowItems() {
-        for(int i=0;i<Content_LobbyInventory.childCount;i++) {
-            Destroy(Content_LobbyInventory.GetChild(i).gameObject);    
+        for (int i = 0; i < Content_LobbyInventory.childCount; i++) {
+            Destroy(Content_LobbyInventory.GetChild(i).gameObject);
         }
-        Items_LobbyInven.Clear();
-        SaveData.Clear();
+        SaveData = SaveData.OrderBy(x => x.itemcode).ToList();
 
-        foreach (var item in Data_LobbyInven) {
+        foreach (var item in SaveData) {
             GameObject button = Instantiate(pre_Button);
             button.transform.SetParent(Content_LobbyInventory, false);
-            button.name = item.code.ToString();
-            string itemName = GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.code).name;
+            button.name = item.itemcode.ToString();
+            string itemName = GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.itemcode).name;
             button.transform.GetChild(0).GetComponent<TMP_Text>().SetText(itemName);
-            #region
-            int type = item.code / 1000;
+            #region Add Component
+            int type = item.itemcode / 1000;
             switch (type) {
                 case 1:
                     button.AddComponent<Item>();
                     break;
                 case 2:
-                    int subtype = item.code / 100;
+                    int subtype = item.itemcode / 100;
                     switch (subtype) {
                         case 20:
                             button.AddComponent<Item_Primary>();
@@ -155,7 +197,7 @@ public class LobbyInventoryController : MonoBehaviour
                             button.AddComponent<Item_Throw>();
                             break;
                         default:
-                            Debug.LogError("Inventory Item Code Error" + item.code);
+                            Debug.LogError("Inventory Item Code Error" + item.itemcode);
                             break;
                     }
                     break;
@@ -175,75 +217,75 @@ public class LobbyInventoryController : MonoBehaviour
                     button.AddComponent<Item_Heal>();
                     break;
                 default:
-                    Debug.LogError("Inventory Item Code Error : " + item.code);
+                    Debug.LogError("Inventory Item Code Error : " + item.itemcode);
                     break;
             }
-            button.GetComponent<Item>()?.Init(item.code);
+            button.GetComponent<Item>()?.Init(item);
             #endregion
 
-            Items_LobbyInven.Add(button.GetComponent<Item>());
-
             //버튼에 갯수 표시
-            if (GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.code).stack != 1) {
-                button.transform.GetChild(1).GetComponent<TMP_Text>().SetText(item.count.ToString());
+            if (GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.itemcode).stack != 1) {
+                button.transform.GetChild(1).GetComponent<TMP_Text>().SetText(item.itemcount.ToString());
             }
             else {
                 button.transform.GetChild(1).GetComponent<TMP_Text>().SetText("");
             }
             //버튼 이미지 가져오기
             Debug.LogWarning("Load Item Image is not realized");
+            //코드를 이용해서 이미지 가져오기
 
-            button.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(button.name));
+            button.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(button));
 
         }
     }
 
     public void SaveLobbyInventory() {
-        string jdata = JsonConvert.SerializeObject(Data_LobbyInven);
-        File.WriteAllText(Application.dataPath + "/Resources/LobbyInven.txt", jdata);
-
         Class_SaveData class_SaveData = new Class_SaveData();
-        SaveData.Clear();
-        foreach(var i in Items_LobbyInven) {
-            SaveData.Add(i.GetSaveInfo());
-        }
         class_SaveData.money = 100;
         class_SaveData.items = SaveData;
         string jdata2 = JsonUtility.ToJson(class_SaveData);
         File.WriteAllText(Application.dataPath + "/Resources/SaveData.txt", jdata2);
-
         print("Save Lobby Inventory Data");
     }
 
     public void AddtoLobbyInventory(int code, int count = 1) {
 
     }
-    public void RemoveFromLobbyInventory(int code, int count = 1) { 
+    public void RemoveFromLobbyInventory(int code, int count = 1) {
 
     }
 
     public void Debug_GetItem() {
-        Data_LobbyInven.Add(new InvenInfo(selectedCode, 1));
-        Data_LobbyInven.Sort(comparel);
+        //아이템 추가
+        //1.인벤에서 동일 아이템을 찾고 있으면 수량을 더한다.
+        //2.동일 아이템의 수량이 넘치면 새로운 버튼을 만든다.
+        //3.동일 아이템이 없으면 새로운 버튼을 만든다.
+        아이템 추가 시 겹칠수 있는 만큼 겹치고 나머지는 새로운 칸으로 만든다
+
+        //인벤토리 새로고침
         ShowItems();
+        //데이터 저장
         SaveLobbyInventory();
+
+        //Data_LobbyInven.Add(new InvenInfo(selectedCode, 1));
+        //Data_LobbyInven.Sort(comparel);
     }
     public void Debug_RemoveItem() {
-        InvenInfo item = Data_LobbyInven.Find(x => x.code == selectedCode);
-        if (item != null) {
-            item.count--;
-            if (item.count <= 0)
-                Data_LobbyInven.Remove(item);
-        }
-        else {
-            print("No Item in Inven");
-        }
-        Data_LobbyInven.Sort(comparel);
-        ShowItems();
-        SaveLobbyInventory();
+        //InvenInfo item = Data_LobbyInven.Find(x => x.code == selectedCode);
+        //if (item != null) {
+        //    item.count--;
+        //    if (item.count <= 0)
+        //        Data_LobbyInven.Remove(item);
+        //}
+        //else {
+        //    print("No Item in Inven");
+        //}
+        //Data_LobbyInven.Sort(comparel);
+        //ShowItems();
+        //SaveLobbyInventory();
     }
 
-    int comparel(InvenInfo a, InvenInfo b) {
-        return a.code < b.code ? -1 : 1;
+    int comparel(ItemInfo_compact a, ItemInfo_compact b) {
+        return a.itemcode < b.itemcode ? -1 : 1;
     }
 }

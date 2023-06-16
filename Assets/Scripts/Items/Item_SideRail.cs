@@ -8,10 +8,10 @@ public class Item_SideRail : Item_Parts
     public enum Modes { light, razor, both}
     [field : SerializeField] public Modes mode {  get; private set; }
 
-    public override void Init(int _code) {
-        base.Init(_code);
+    public override void Init(ItemInfo_compact item) {
+        base.Init(item);
         mount = Mount.side;
-        mode = (Modes)Enum.Parse(typeof(Modes), LoadItemData.instance.GetItemData(_code).etc[0]);
+        mode = (Modes)Enum.Parse(typeof(Modes), LoadItemData.instance.GetItemData(item.itemcode).etc[0]);
     }
 
     public void ChangeMode() {

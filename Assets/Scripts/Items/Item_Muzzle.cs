@@ -9,10 +9,10 @@ public class Item_Muzzle : Item_Parts
     [field : SerializeField] public Type type { get; protected set; }
     [SerializeField] protected float recoil_reduction;
 
-    public override void Init(int _code) {
-        base.Init(_code);
+    public override void Init(ItemInfo_compact item) {
+        base.Init(item);
         mount = Mount.muzzle;
-        string[] etc = LoadItemData.instance.GetItemData(_code).etc;
+        string[] etc = LoadItemData.instance.GetItemData(item.itemcode).etc;
         type = (Type)Enum.Parse(typeof(Type), etc[0]);
         recoil_reduction = float.Parse(etc[1]);
     }

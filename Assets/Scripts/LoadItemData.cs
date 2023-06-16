@@ -44,6 +44,10 @@ public class LoadItemData : MonoBehaviour
     }
 
     void Start() {
+        LoadData();   
+    }
+
+    public void LoadData() {
         string[] line = Data_Items.text.Substring(0, Data_Items.text.Length - 1).Split('\n');
         for (int i = 0; i < line.Length; i++) {
             string[] row = line[i].Split("\t");
@@ -53,6 +57,7 @@ public class LoadItemData : MonoBehaviour
             }
             Data_Item.Add(new ItemInfo(int.Parse(row[0]), row[1], float.Parse(row[2]), float.Parse(row[3]), int.Parse(row[4]), etc));
         }
+        print("Load Item Data");
     }
 
     

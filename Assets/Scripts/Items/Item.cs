@@ -19,15 +19,14 @@ public class Item : MonoBehaviour
 
 
     //아이템 정보 초기화
-    public virtual void Init(int _code) {
+    public virtual void Init(ItemInfo_compact item) {
         //print("Init : " + name);
-        ItemInfo data = LoadItemData.instance.GetItemData(_code);
+        ItemInfo data = LoadItemData.instance.GetItemData(item.itemcode);
         itemname = data.name;
         code = data.code;
         volume = data.volume;
         weight = data.weight;
-        //count = 1;
-        Debug.LogWarning("Item Count Load 구현 필요");
+        count = item.itemcount;
     }
 
     public virtual ItemInfo_compact GetSaveInfo() {
