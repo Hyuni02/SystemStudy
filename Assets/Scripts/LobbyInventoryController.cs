@@ -81,13 +81,9 @@ public class LobbyInventoryController : MonoBehaviour {
         }
     }
 
-    ItemInfo_compact SetItemInfo(ItemInfo_compact _item) {
-        ItemInfo_compact item = new ItemInfo_compact();
-
-        item.itemcode = _item.itemcode;
-        item.itemcount = _item.itemcount;
-
-        string[] props = LoadItemData.instance.Data_Item.Find(x => x.code == item.itemcode).etc;
+    void SetItemProps(ref ItemInfo_compact item) {
+        int code = item.itemcode;
+        string[] props = LoadItemData.instance.Data_Item.Find(x => x.code == code).etc;
         #region 내부 정보 저장
         int type = item.itemcode / 1000;
         switch (type) {
@@ -114,8 +110,6 @@ public class LobbyInventoryController : MonoBehaviour {
                 break;
         }
         #endregion
-
-        return item;
     }
     public void LoadLobbyInventory() {
         //세이브 파일이 없을 때
@@ -128,7 +122,7 @@ public class LobbyInventoryController : MonoBehaviour {
                 item.itemcode = int.Parse(row[0]);
                 item.itemcount = int.Parse(row[1]);
 
-                item = SetItemInfo(item);
+                SetItemProps(ref item);
 
                 SaveData.Add(item);
             }
@@ -276,7 +270,7 @@ public class LobbyInventoryController : MonoBehaviour {
             ItemInfo_compact newitem = new ItemInfo_compact();
             newitem.itemcode = selectedCode;
             newitem.itemcount = max;
-            newitem = SetItemInfo(newitem);
+            SetItemProps(ref newitem);
 
             for (int i = 0; i < newitemgroup; i++) {
                 SaveData.Add(newitem);
@@ -286,7 +280,7 @@ public class LobbyInventoryController : MonoBehaviour {
             ItemInfo_compact restitem = new ItemInfo_compact();
             restitem.itemcode = selectedCode;
             restitem.itemcount = rests;
-            restitem = SetItemInfo(restitem);
+            SetItemProps(ref restitem);
             SaveData.Add(restitem);
         }
         //인벤토리 새로고침
