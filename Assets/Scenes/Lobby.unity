@@ -1329,7 +1329,7 @@ MonoBehaviour:
     type: 3}
   Panel_LobbyInventory: {fileID: 1238283683}
   Content_LobbyInventory: {fileID: 69776837}
-  Data_LobbyInven: []
+  SaveData: []
 --- !u!114 &234471162
 MonoBehaviour:
   m_ObjectHideFlags: 0

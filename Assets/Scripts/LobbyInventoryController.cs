@@ -52,7 +52,7 @@ public class LobbyInventoryController : MonoBehaviour {
     [HideInInspector]
     public int selectedCode;
     [HideInInspector]
-    public int itemcount = 1;
+    int itemcount = 3;
 
     [Header("Debug Slot")]
     public Button btn_Get;
@@ -81,6 +81,42 @@ public class LobbyInventoryController : MonoBehaviour {
         }
     }
 
+    ItemInfo_compact SetItemInfo(ItemInfo_compact _item) {
+        ItemInfo_compact item = new ItemInfo_compact();
+
+        item.itemcode = _item.itemcode;
+        item.itemcount = _item.itemcount;
+
+        string[] props = LoadItemData.instance.Data_Item.Find(x => x.code == item.itemcode).etc;
+        #region 내부 정보 저장
+        int type = item.itemcode / 1000;
+        switch (type) {
+            case 2:
+                int subtype = item.itemcode / 100;
+                switch (subtype) {
+                    case 20:
+                    case 21:
+                        item.properties.Add(new StringInt("muzzle", int.Parse(props[0])));
+                        item.properties.Add(new StringInt("under_rail", int.Parse(props[1])));
+                        item.properties.Add(new StringInt("side_rail", int.Parse(props[2])));
+                        item.properties.Add(new StringInt("upper_rail", int.Parse(props[3])));
+                        item.properties.Add(new StringInt("magazine", int.Parse(props[4])));
+                        item.properties.Add(new StringInt("stock", int.Parse(props[5])));
+                        break;
+                    case 27:
+                        item.properties.Add(new StringInt("count", 0));
+                        break;
+                }
+                break;
+            case 4:
+            case 5:
+                item.properties.Add(new StringInt("health", int.Parse(props[1])));
+                break;
+        }
+        #endregion
+
+        return item;
+    }
     public void LoadLobbyInventory() {
         //세이브 파일이 없을 때
         if (!File.Exists(Application.dataPath + "/Resources/SaveData.txt")) {
@@ -92,33 +128,7 @@ public class LobbyInventoryController : MonoBehaviour {
                 item.itemcode = int.Parse(row[0]);
                 item.itemcount = int.Parse(row[1]);
 
-                string[] props = LoadItemData.instance.Data_Item.Find(x => x.code == item.itemcode).etc;
-                #region 내부 정보 저장
-                int type = item.itemcode / 1000;
-                switch (type) {
-                    case 2:
-                        int subtype = item.itemcode / 100;
-                        switch (subtype) {
-                            case 20:
-                            case 21:
-                                item.properties.Add(new StringInt("muzzle", int.Parse(props[0])));
-                                item.properties.Add(new StringInt("under_rail", int.Parse(props[1])));
-                                item.properties.Add(new StringInt("side_rail", int.Parse(props[2])));
-                                item.properties.Add(new StringInt("upper_rail", int.Parse(props[3])));
-                                item.properties.Add(new StringInt("magazine", int.Parse(props[4])));
-                                item.properties.Add(new StringInt("stock", int.Parse(props[5])));
-                                break;
-                            case 27:
-                                item.properties.Add(new StringInt("count", 0));
-                                break;
-                        }
-                        break;
-                    case 4:
-                    case 5:
-                        item.properties.Add(new StringInt("health", int.Parse(props[1])));
-                        break;
-                }
-                #endregion
+                item = SetItemInfo(item);
 
                 SaveData.Add(item);
             }
@@ -256,12 +266,29 @@ public class LobbyInventoryController : MonoBehaviour {
     }
 
     public void Debug_GetItem() {
+        print("Add : " + selectedCode + "(" + itemcount + ")");
         //아이템 추가
-        //1.인벤에서 동일 아이템을 찾고 있으면 수량을 더한다.
-        //2.동일 아이템의 수량이 넘치면 새로운 버튼을 만든다.
-        //3.동일 아이템이 없으면 새로운 버튼을 만든다.
-        아이템 추가 시 겹칠수 있는 만큼 겹치고 나머지는 새로운 칸으로 만든다
+        int max = LoadItemData.instance.GetItemData(selectedCode).stack;
+        int newitemgroup = itemcount / max; //아이템 그룹 수
+        int rests = itemcount % max; //나머지 아이템 수
 
+        if (newitemgroup > 0) {
+            ItemInfo_compact newitem = new ItemInfo_compact();
+            newitem.itemcode = selectedCode;
+            newitem.itemcount = max;
+            newitem = SetItemInfo(newitem);
+
+            for (int i = 0; i < newitemgroup; i++) {
+                SaveData.Add(newitem);
+            }
+        }
+        if (rests > 0) {
+            ItemInfo_compact restitem = new ItemInfo_compact();
+            restitem.itemcode = selectedCode;
+            restitem.itemcount = rests;
+            restitem = SetItemInfo(restitem);
+            SaveData.Add(restitem);
+        }
         //인벤토리 새로고침
         ShowItems();
         //데이터 저장
