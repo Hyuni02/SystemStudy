@@ -260,19 +260,18 @@ public class LobbyInventoryController : MonoBehaviour {
     }
 
     public void Debug_GetItem() {
-        print("Add : " + selectedCode + "(" + itemcount + ")");
+        print($"Add : {selectedCode}({itemcount})");
         //아이템 추가
         int max = LoadItemData.instance.GetItemData(selectedCode).stack;
         int newitemgroup = itemcount / max; //아이템 그룹 수
         int rests = itemcount % max; //나머지 아이템 수
 
         if (newitemgroup > 0) {
-            ItemInfo_compact newitem = new ItemInfo_compact();
-            newitem.itemcode = selectedCode;
-            newitem.itemcount = max;
-            SetItemProps(ref newitem);
-
             for (int i = 0; i < newitemgroup; i++) {
+                ItemInfo_compact newitem = new ItemInfo_compact();
+                newitem.itemcode = selectedCode;
+                newitem.itemcount = max;
+                SetItemProps(ref newitem);
                 SaveData.Add(newitem);
             }
         }
@@ -287,23 +286,30 @@ public class LobbyInventoryController : MonoBehaviour {
         ShowItems();
         //데이터 저장
         SaveLobbyInventory();
-
-        //Data_LobbyInven.Add(new InvenInfo(selectedCode, 1));
-        //Data_LobbyInven.Sort(comparel);
     }
     public void Debug_RemoveItem() {
-        //InvenInfo item = Data_LobbyInven.Find(x => x.code == selectedCode);
-        //if (item != null) {
-        //    item.count--;
-        //    if (item.count <= 0)
-        //        Data_LobbyInven.Remove(item);
-        //}
-        //else {
-        //    print("No Item in Inven");
-        //}
-        //Data_LobbyInven.Sort(comparel);
-        //ShowItems();
-        //SaveLobbyInventory();
+        print($"Remove : {selectedCode}(1)");
+        //아이템 제거
+        //선택한 아이템이 인벤토리에 있는지 확인
+        foreach(var item in SaveData) {
+            if(item.itemcode == selectedCode) {
+                ItemInfo_compact target = item;
+                //해당 아이템의 수를 1차감
+                target.itemcount--;
+                //차감된 아이템의 수가 0이면 버튼 지우기
+                if (target.itemcount == 0) {
+                    SaveData.Remove(target);
+                }
+                //인벤토리 새로고침
+                ShowItems();
+                //데이터 저장
+                SaveLobbyInventory();
+                return;
+            }
+        }
+
+        //해당 아이템이 없으면 아무것도 안함
+        print($"No Item : {selectedCode}");
     }
 
     int comparel(ItemInfo_compact a, ItemInfo_compact b) {
