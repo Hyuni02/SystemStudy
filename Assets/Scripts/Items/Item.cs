@@ -14,6 +14,8 @@ public class Item : MonoBehaviour
     public float weight { get; set; }
     [field : SerializeField]
     public int count { get; set; }
+    [field: SerializeField]
+    public Sprite sprite { get; set; }
 
     protected ItemInfo_compact info;
 

@@ -48,7 +48,8 @@ public class Class_SaveData {
 
 public class LobbyInventoryController : MonoBehaviour {
     public TextAsset InitLobbyInvenData;
-
+    public Image dragImage;
+    public int dragCode;
     [HideInInspector]
     public int selectedCode;
     [HideInInspector]
@@ -159,6 +160,8 @@ public class LobbyInventoryController : MonoBehaviour {
             GameObject button = Instantiate(pre_Button);
             button.transform.SetParent(Content_LobbyInventory, false);
             button.name = item.itemcode.ToString();
+            button.GetComponent<UIProperty>().b_dragable = true;
+            button.GetComponent<UIProperty>().b_dropable = true;
             string itemName = GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.itemcode).name;
             button.transform.GetChild(0).GetComponent<TMP_Text>().SetText(itemName);
             #region Add Component
