@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Item : MonoBehaviour
 {
@@ -15,10 +16,17 @@ public class Item : MonoBehaviour
     [field : SerializeField]
     public int count { get; set; }
     [field: SerializeField]
-    public Sprite sprite { get; set; }
-
+    
     protected ItemInfo_compact info;
 
+    GameObject Main_Camera;
+    ItemImageLoader itemImageLoader = null;
+
+    private void Start() {
+        Main_Camera = GameObject.Find("Main Camera");
+        itemImageLoader = Main_Camera.GetComponent<ItemImageLoader>();
+        GetComponent<Image>().sprite = itemImageLoader.GetSprite(GetComponent<Item>().code);
+    }
 
     //아이템 정보 초기화
     public virtual void Init(ItemInfo_compact item) {

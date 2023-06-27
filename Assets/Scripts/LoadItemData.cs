@@ -39,7 +39,6 @@ public class LoadItemData : MonoBehaviour
 
     public ItemInfo GetItemData(int code) {
         ItemInfo info = Data_Item.Find(x => x.code == code);
-        //Debug.LogWarning("Init Item Data is not implemented");
         return info;
     }
 

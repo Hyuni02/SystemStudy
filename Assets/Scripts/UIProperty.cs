@@ -9,19 +9,18 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public bool b_dragable = false;
     public bool b_dropable = false;
 
-
+    GameObject Main_Camera;
     LobbyInventoryController lobbyInventoryController = null;
     private void Start() {
-        lobbyInventoryController = GameObject.FindFirstObjectByType<LobbyInventoryController>();
+        Main_Camera = GameObject.Find("Main Camera");
+        lobbyInventoryController = Main_Camera.GetComponent<LobbyInventoryController>();
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
         if (!b_dragable) return;
         lobbyInventoryController.dragImage.gameObject.SetActive(true);
-        lobbyInventoryController.dragImage.GetComponent<Image>().sprite = GetComponent<Item>().sprite;
+        lobbyInventoryController.dragImage.GetComponent<Image>().sprite = GetComponent<Image>().sprite;
         lobbyInventoryController.dragCode = this.GetComponent<Item>().code;
-
-
     }
 
     public void OnDrag(PointerEventData eventData) {

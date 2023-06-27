@@ -28,10 +28,10 @@ public class LoadStoreItemList : MonoBehaviour
             string itemName = GetComponent<LoadItemData>().Data_Item.Find(x => x.code == int.Parse(item["Code"].ToString())).name;
             button.transform.GetChild(0).GetComponent<TMP_Text>().SetText(itemName);
             button.transform.GetChild(1).GetComponent<TMP_Text>().SetText(item["Cost"].ToString());
-            
+
             //버튼 이미지 가져오기
-            Debug.LogWarning("Load Item Image is not realized");
-            
+            button.GetComponent<Image>().sprite = GetComponent<ItemImageLoader>().GetSprite(int.Parse(item["Code"].ToString()));
+
             button.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(button.name));
         }
         print("Load Shop Item List Successfully");
