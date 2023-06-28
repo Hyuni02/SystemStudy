@@ -67,7 +67,11 @@ public class LobbyInventoryController : MonoBehaviour {
     public Transform Content_LobbyInventory;
 
     [SerializeField]
+    public Slider Slider_Inven;
+    public float maxCapacity = 100f;
+    public float currentCapacity = 0f;
     public List<ItemInfo_compact> SaveData;
+
 
     public void Start() {
         LoadLobbyInventory();
@@ -140,6 +144,16 @@ public class LobbyInventoryController : MonoBehaviour {
             SaveData = loadedData.items;
             print("Load Lobby Inventory Data");
         }
+
+        //인벤토리 용량 새로고침
+        currentCapacity = 0;
+        foreach (var item in SaveData) {
+            currentCapacity += LoadItemData.instance.GetItemData(item.itemcode).volume * item.itemcount;
+        }
+        float percent = currentCapacity / maxCapacity;
+        Slider_Inven.value = percent;
+        if( percent > 0.67f ) Slider_Inven.fillRect.GetComponent<Image>().color = Color.red;
+        else Slider_Inven.fillRect.GetComponent<Image>().color = Color.green;
 
         ShowItems();
     }
@@ -237,9 +251,6 @@ public class LobbyInventoryController : MonoBehaviour {
             else {
                 button.transform.GetChild(1).GetComponent<TMP_Text>().SetText("");
             }
-            //버튼 이미지 가져오기
-            Debug.LogWarning("Load Item Image is not realized");
-            //코드를 이용해서 이미지 가져오기
 
             button.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(button));
 
@@ -289,6 +300,7 @@ public class LobbyInventoryController : MonoBehaviour {
         ShowItems();
         //데이터 저장
         SaveLobbyInventory();
+        LoadLobbyInventory();
     }
     public void Debug_RemoveItem() {
         print($"Remove : {selectedCode}(1)");
@@ -307,10 +319,10 @@ public class LobbyInventoryController : MonoBehaviour {
                 ShowItems();
                 //데이터 저장
                 SaveLobbyInventory();
+                LoadLobbyInventory();
                 return;
             }
         }
-
         //해당 아이템이 없으면 아무것도 안함
         print($"No Item : {selectedCode}");
     }

@@ -68,7 +68,7 @@ public class LobbyUIController : MonoBehaviour
     }
 
     void Open_Panel_Inven() {
-        Debug.LogWarning("Inven Refresh is not realized");
+        GetComponent<LobbyInventoryController>().LoadLobbyInventory();
         Panel_Inven.SetActive(true);
     }
     void Open_Panel_SelectedCharacter() {
