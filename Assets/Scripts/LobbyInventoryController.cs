@@ -173,7 +173,7 @@ public class LobbyInventoryController : MonoBehaviour {
         foreach (var item in SaveData) {
             GameObject button = Instantiate(pre_Button);
             button.transform.SetParent(Content_LobbyInventory, false);
-            button.name = item.itemcode.ToString();
+            button.name = $"{LoadItemData.instance.GetItemData(item.itemcode).name}({item.itemcode.ToString()})";
             button.GetComponent<UIProperty>().b_dragable = true;
             button.GetComponent<UIProperty>().b_dropable = true;
             string itemName = GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.itemcode).name;

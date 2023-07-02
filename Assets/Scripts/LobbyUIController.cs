@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LobbyUIController : MonoBehaviour
 {
     LobbyCameraController cameraController;
+    CharacterInfoLoader characterInfoLoader;
     int index;
 
     public GameObject Panel_Inven;
@@ -15,6 +17,7 @@ public class LobbyUIController : MonoBehaviour
     void Start()
     {
         cameraController = GetComponent<LobbyCameraController>();
+        characterInfoLoader = GetComponent<CharacterInfoLoader>();
     }
 
     void Update()
@@ -37,18 +40,23 @@ public class LobbyUIController : MonoBehaviour
                     break;
                 case LobbyFacility.FacilityType.CommandTable:
                     index = 2;
+                    Debug.LogWarning("지휘부 영기 미구현");
                     break;
                 case LobbyFacility.FacilityType.Table:
                     index = 3;
+                    Debug.LogWarning("테이블 열기 미구현");
                     break;
                 case LobbyFacility.FacilityType.Sever:
                     index = 4;
+                    Debug.LogWarning("서버실 열기 미구현");
                     break;
                 case LobbyFacility.FacilityType.Counter:
                     index = 5;
+                    Debug.LogWarning("카운터 열기 미구현");
                     break;
                 case LobbyFacility.FacilityType.RestoreStation:
                     index = 6;
+                    Debug.LogWarning("수복시설 열기 미구현");
                     Panel_SelectedCharacter.SetActive(true);
                     break;
                 default:
@@ -71,8 +79,15 @@ public class LobbyUIController : MonoBehaviour
         GetComponent<LobbyInventoryController>().LoadLobbyInventory();
         Panel_Inven.SetActive(true);
     }
-    void Open_Panel_SelectedCharacter() {
+    void Open_Panel_SelectedCharacter(string name = null) {
         Debug.LogWarning("SelectedCharacter is not realized");
+        if (name == null) {
+            DollInfo dollInfo = characterInfoLoader.Characters.First().Value;
+        }
+        else {
+
+        }
+
         Panel_SelectedCharacter.SetActive(true);
     }
 
