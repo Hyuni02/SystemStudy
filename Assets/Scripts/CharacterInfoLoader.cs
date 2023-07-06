@@ -44,11 +44,6 @@ public class CharacterInfoLoader : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        
-    }
-
     void LoadCharacterInfo() {
         DirectoryInfo dir = new DirectoryInfo($"{Application.dataPath}/Resources/Characters");
         foreach(var savefile in dir.GetFiles()) {

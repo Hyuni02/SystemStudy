@@ -80,15 +80,20 @@ public class LobbyUIController : MonoBehaviour
         Panel_Inven.SetActive(true);
     }
     void Open_Panel_SelectedCharacter(string name = null) {
-        Debug.LogWarning("SelectedCharacter is not realized");
+        DollInfo dollInfo = null;
         if (name == null) {
-            DollInfo dollInfo = characterInfoLoader.Characters.First().Value;
+            dollInfo = characterInfoLoader.Characters.First().Value;
         }
         else {
-
+            dollInfo = characterInfoLoader.Characters[name];
         }
+        Update_Panel_SelectedCharacter(dollInfo);
 
         Panel_SelectedCharacter.SetActive(true);
+    }
+
+    void Update_Panel_SelectedCharacter(DollInfo dollInfo) {
+        Debug.LogWarning("Updat_Panel_SelectedCharacter is not realized");
     }
 
     void OpenPanel(int _index) {
