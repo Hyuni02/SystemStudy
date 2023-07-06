@@ -32,7 +32,7 @@ public class LoadStoreItemList : MonoBehaviour
             //버튼 이미지 가져오기
             button.GetComponent<Image>().sprite = GetComponent<ItemImageLoader>().GetSprite(int.Parse(item["Code"].ToString()));
 
-            button.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(button.name));
+            button.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(item["Code"].ToString()));
         }
         print("Load Shop Item List Successfully");
     }
