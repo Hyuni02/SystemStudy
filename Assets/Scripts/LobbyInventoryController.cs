@@ -164,6 +164,75 @@ public class LobbyInventoryController : MonoBehaviour {
         string itemName = button.GetComponent<Item>().itemname;
         txt_Name.SetText(itemName);
     }
+
+    //아이템(버튼)에 데이터 적용
+    public void AddComponenttoButton(ItemInfo_compact item, GameObject button) {
+        #region Add Component
+        int type = item.itemcode / 1000;
+        switch (type) {
+            case 1:
+                button.AddComponent<Item>();
+                break;
+            case 2:
+                int subtype = item.itemcode / 100;
+                switch (subtype) {
+                    case 20:
+                        button.AddComponent<Item_Primary>();
+                        break;
+                    case 21:
+                        button.AddComponent<Item_Secondary>();
+                        break;
+                    case 22:
+                        button.AddComponent<Item_UpperRail>();
+                        break;
+                    case 23:
+                        button.AddComponent<Item_UnderRail>();
+                        break;
+                    case 24:
+                        button.AddComponent<Item_Stock>();
+                        break;
+                    case 25:
+                        button.AddComponent<Item_Muzzle>();
+                        break;
+                    case 26:
+                        button.AddComponent<Item_SideRail>();
+                        break;
+                    case 27:
+                        button.AddComponent<Item_Magazine>();
+                        break;
+                    case 28:
+                        button.AddComponent<Item_Ammo>();
+                        break;
+                    case 29:
+                        button.AddComponent<Item_Throw>();
+                        break;
+                    default:
+                        Debug.LogError("Inventory Item Code Error" + item.itemcode);
+                        break;
+                }
+                break;
+            case 3:
+                button.AddComponent<Item_Bag>();
+                break;
+            case 4:
+                button.AddComponent<Item_Helmet>();
+                break;
+            case 5:
+                button.AddComponent<Item_BodyArmor>();
+                break;
+            case 6:
+                button.AddComponent<Item_Food>();
+                break;
+            case 7:
+                button.AddComponent<Item_Heal>();
+                break;
+            default:
+                Debug.LogError("Inventory Item Code Error : " + item.itemcode);
+                break;
+        }
+        button.GetComponent<Item>()?.Init(item);
+        #endregion
+    }
     void ShowItems() {
         for (int i = 0; i < Content_LobbyInventory.childCount; i++) {
             Destroy(Content_LobbyInventory.GetChild(i).gameObject);
@@ -178,71 +247,8 @@ public class LobbyInventoryController : MonoBehaviour {
             button.GetComponent<UIProperty>().b_dropable = true;
             string itemName = GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.itemcode).name;
             button.transform.GetChild(0).GetComponent<TMP_Text>().SetText(itemName);
-            #region Add Component
-            int type = item.itemcode / 1000;
-            switch (type) {
-                case 1:
-                    button.AddComponent<Item>();
-                    break;
-                case 2:
-                    int subtype = item.itemcode / 100;
-                    switch (subtype) {
-                        case 20:
-                            button.AddComponent<Item_Primary>();
-                            break;
-                        case 21:
-                            button.AddComponent<Item_Secondary>();
-                            break;
-                        case 22:
-                            button.AddComponent<Item_UpperRail>();
-                            break;
-                        case 23:
-                            button.AddComponent<Item_UnderRail>();
-                            break;
-                        case 24:
-                            button.AddComponent<Item_Stock>();
-                            break;
-                        case 25:
-                            button.AddComponent<Item_Muzzle>();
-                            break;
-                        case 26:
-                            button.AddComponent<Item_SideRail>();
-                            break;
-                        case 27:
-                            button.AddComponent<Item_Magazine>();
-                            break;
-                        case 28:
-                            button.AddComponent<Item_Ammo>();
-                            break;
-                        case 29:
-                            button.AddComponent<Item_Throw>();
-                            break;
-                        default:
-                            Debug.LogError("Inventory Item Code Error" + item.itemcode);
-                            break;
-                    }
-                    break;
-                case 3:
-                    button.AddComponent<Item_Bag>();
-                    break;
-                case 4:
-                    button.AddComponent<Item_Helmet>();
-                    break;
-                case 5:
-                    button.AddComponent<Item_BodyArmor>();
-                    break;
-                case 6:
-                    button.AddComponent<Item_Food>();
-                    break;
-                case 7:
-                    button.AddComponent<Item_Heal>();
-                    break;
-                default:
-                    Debug.LogError("Inventory Item Code Error : " + item.itemcode);
-                    break;
-            }
-            button.GetComponent<Item>()?.Init(item);
-            #endregion
+            AddComponenttoButton(item, button);
+           
 
             //버튼에 갯수 표시
             if (GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.itemcode).stack != 1) {
@@ -303,13 +309,13 @@ public class LobbyInventoryController : MonoBehaviour {
         LoadLobbyInventory();
     }
     public void Debug_RemoveItem() {
-        print($"Remove : {selectedCode}(1)");
         //아이템 제거
         //선택한 아이템이 인벤토리에 있는지 확인
         foreach(var item in SaveData) {
             if(item.itemcode == selectedCode) {
                 ItemInfo_compact target = item;
                 //해당 아이템의 수를 1차감
+                print($"Remove : {selectedCode}(1)");
                 target.itemcount--;
                 //차감된 아이템의 수가 0이면 버튼 지우기
                 if (target.itemcount == 0) {

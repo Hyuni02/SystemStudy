@@ -1,0 +1,1 @@
+{"name":"AN-94","equipInfo":{"Primary":{"itemcode":2002,"itemcount":1,"properties":[]},"Secondary":{"itemcode":0,"itemcount":0,"properties":[]},"Helmet":{"itemcode":0,"itemcount":0,"properties":[]},"Armor":{"itemcode":0,"itemcount":0,"properties":[]},"Bag":{"itemcode":0,"itemcount":0,"properties":[]}},"inventory":[{"itemcode":1002,"itemcount":10,"properties":[]}]}

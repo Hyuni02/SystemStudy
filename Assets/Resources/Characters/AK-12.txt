@@ -1,1 +1,1 @@
-{"name":"AK-12","inventory":[{"itemcode":1001,"itemcount":10,"properties":[]}]}
+{"name":"AK-12","equipInfo":{"Primary":{"itemcode":2001,"itemcount":1,"properties":[]},"Secondary":{"itemcode":0,"itemcount":0,"properties":[]},"Helmet":{"itemcode":0,"itemcount":0,"properties":[]},"Armor":{"itemcode":0,"itemcount":0,"properties":[]},"Bag":{"itemcode":0,"itemcount":0,"properties":[]}},"inventory":[{"itemcode":1001,"itemcount":10,"properties":[]}]}

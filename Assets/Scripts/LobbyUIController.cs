@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class LobbyUIController : MonoBehaviour
@@ -40,7 +41,7 @@ public class LobbyUIController : MonoBehaviour
                     break;
                 case LobbyFacility.FacilityType.CommandTable:
                     index = 2;
-                    Debug.LogWarning("지휘부 영기 미구현");
+                    Debug.LogWarning("지휘부 열기 미구현");
                     break;
                 case LobbyFacility.FacilityType.Table:
                     index = 3;
@@ -93,7 +94,10 @@ public class LobbyUIController : MonoBehaviour
     }
 
     void Update_Panel_SelectedCharacter(DollInfo dollInfo) {
+        print($"Open {dollInfo.name}");
         Debug.LogWarning("Updat_Panel_SelectedCharacter is not realized");
+        Debug.LogWarning("Show SelectedCharacter's inventory is not realized");
+        Debug.LogWarning("Show SelectedCharacter's equipment is not realized");
     }
 
     void OpenPanel(int _index) {
