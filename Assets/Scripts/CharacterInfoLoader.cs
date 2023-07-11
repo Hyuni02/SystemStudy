@@ -18,8 +18,20 @@ public class EquipInfo {
 
 public class DollInfo {
     public string name;
+    public float minCapacity;
     public EquipInfo equipInfo = new EquipInfo();
     public List<ItemInfo_compact> inventory = new List<ItemInfo_compact>();
+
+    public float Update_InvenCapacity() {
+        //인벤 최대 용량 계산
+        if(equipInfo.Bag == null) {
+            return 25;
+        }
+        else {
+            //maxCapacity = 25 + equipInfo.Bag.properties[]
+            return 100;
+        }
+    }
 }
 
 public class CharacterInfoLoader : MonoBehaviour
@@ -57,7 +69,7 @@ public class CharacterInfoLoader : MonoBehaviour
             //보유 아이템 부여
             ItemInfo_compact itemInfo = new ItemInfo_compact();
             itemInfo.itemcode = 1001;
-            itemInfo.itemcount = 10;
+            itemInfo.itemcount = 16;
             ak12.inventory.Add(itemInfo);
             //저장
             Characters.Add(ak12.name,ak12);

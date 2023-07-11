@@ -12,6 +12,9 @@ public class LobbyUIController : MonoBehaviour
     CharacterInfoLoader characterInfoLoader;
     int index;
 
+    public Transform Content_SelectedCharacterInventory;
+    public Slider Slider_SelectedCharacter;
+
     public GameObject Panel_Inven;
     public GameObject Panel_SelectedCharacter;
     EquipmentUI SelectedCharacter_Helmet;
@@ -169,7 +172,8 @@ public class LobbyUIController : MonoBehaviour
         }
         #endregion
         #region 보유 아이템 보여주기
-        Debug.LogWarning("Show SelectedCharacter's inventory is not realized");
+        GetComponent<LobbyInventoryController>().Update_CapacitySlider(Slider_SelectedCharacter, ref dollInfo.inventory, dollInfo.Update_InvenCapacity());
+        GetComponent<LobbyInventoryController>().ShowItems(ref Content_SelectedCharacterInventory, ref dollInfo.inventory);
         #endregion
     }
 

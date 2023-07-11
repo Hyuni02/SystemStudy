@@ -145,17 +145,20 @@ public class LobbyInventoryController : MonoBehaviour {
             print("Load Lobby Inventory Data");
         }
 
+
+        Update_CapacitySlider(Slider_Inven, ref SaveData, maxCapacity);
+        ShowItems(ref Content_LobbyInventory, ref SaveData);
+    }
+    public void Update_CapacitySlider(Slider slider, ref List<ItemInfo_compact> list_item, float max) {
         //인벤토리 용량 새로고침
         currentCapacity = 0;
-        foreach (var item in SaveData) {
+        foreach (var item in list_item) {
             currentCapacity += LoadItemData.instance.GetItemData(item.itemcode).volume * item.itemcount;
         }
-        float percent = currentCapacity / maxCapacity;
-        Slider_Inven.value = percent;
-        if( percent > 0.67f ) Slider_Inven.fillRect.GetComponent<Image>().color = Color.red;
-        else Slider_Inven.fillRect.GetComponent<Image>().color = Color.green;
-
-        ShowItems();
+        float percent = currentCapacity / max;
+        slider.value = percent;
+        if (percent > 0.67f) slider.fillRect.GetComponent<Image>().color = Color.red;
+        else slider.fillRect.GetComponent<Image>().color = Color.green;
     }
     void ButtonClicked(GameObject button) {
         print("Click : " + button.GetComponent<Item>().itemname);
@@ -233,29 +236,29 @@ public class LobbyInventoryController : MonoBehaviour {
         button.GetComponent<Item>()?.Init(item);
         #endregion
     }
-    void ShowItems() {
-        for (int i = 0; i < Content_LobbyInventory.childCount; i++) {
-            Destroy(Content_LobbyInventory.GetChild(i).gameObject);
+    public void ShowItems(ref Transform viewport,ref List<ItemInfo_compact> list_item) {
+        for (int i = 0; i < viewport.childCount; i++) {
+            Destroy(viewport.GetChild(i).gameObject);
         }
-        SaveData = SaveData.OrderBy(x => x.itemcode).ToList();
+        list_item = list_item.OrderBy(x => x.itemcode).ToList();
 
-        foreach (var item in SaveData) {
+        foreach (var item in list_item) {
             GameObject button = Instantiate(pre_Button);
-            button.transform.SetParent(Content_LobbyInventory, false);
+            button.transform.SetParent(viewport, false);
             button.name = $"{LoadItemData.instance.GetItemData(item.itemcode).name}({item.itemcode.ToString()})";
             button.GetComponent<UIProperty>().b_dragable = true;
             button.GetComponent<UIProperty>().b_dropable = true;
             string itemName = GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.itemcode).name;
-            button.transform.GetChild(0).GetComponent<TMP_Text>().SetText(itemName);
+            button.transform.GetChild(0).GetComponent<TMP_Text>()?.SetText(itemName);
             AddComponenttoButton(item, button);
            
 
             //버튼에 갯수 표시
             if (GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.itemcode).stack != 1) {
-                button.transform.GetChild(1).GetComponent<TMP_Text>().SetText(item.itemcount.ToString());
+                button.transform.GetChild(1).GetComponent<TMP_Text>()?.SetText(item.itemcount.ToString());
             }
             else {
-                button.transform.GetChild(1).GetComponent<TMP_Text>().SetText("");
+                button.transform.GetChild(1).GetComponent<TMP_Text>()?.SetText("");
             }
 
             button.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(button));
@@ -303,7 +306,7 @@ public class LobbyInventoryController : MonoBehaviour {
             SaveData.Add(restitem);
         }
         //인벤토리 새로고침
-        ShowItems();
+        ShowItems(ref Content_LobbyInventory, ref SaveData);
         //데이터 저장
         SaveLobbyInventory();
         LoadLobbyInventory();
@@ -322,7 +325,7 @@ public class LobbyInventoryController : MonoBehaviour {
                     SaveData.Remove(target);
                 }
                 //인벤토리 새로고침
-                ShowItems();
+                ShowItems(ref Content_LobbyInventory, ref SaveData);
                 //데이터 저장
                 SaveLobbyInventory();
                 LoadLobbyInventory();
