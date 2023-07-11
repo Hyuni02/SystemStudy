@@ -20,7 +20,7 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         if (!b_dragable) return;
         lobbyInventoryController.dragImage.gameObject.SetActive(true);
         lobbyInventoryController.dragImage.GetComponent<Image>().sprite = GetComponent<Image>().sprite;
-        lobbyInventoryController.dragCode = this.GetComponent<Item>().code;
+        lobbyInventoryController.dragCode = this.GetComponent<Item>() ? this.GetComponent<Item>().code : this.GetComponent<EquipmentUI>().equiped.itemcode;
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -39,8 +39,8 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     }
 
     public void OnDrop(PointerEventData eventData) {
-        //print($"드래그한 오브젝트 : {eventData.pointerDrag.name}");
-        //print($"드랍한 위치의 오브젝트 : {gameObject.name}");
+        print($"드래그한 오브젝트 : {eventData.pointerDrag.name}");
+        print($"드랍한 위치의 오브젝트 : {gameObject.name}");
 
         //드랍할 수 없는 위치에 드랍 (상점 아이템 위)
         if (!b_dropable) {

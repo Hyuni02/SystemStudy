@@ -5,6 +5,7 @@ using System.IO;
 using UnityEngine.Experimental.AI;
 using Mono.CompilerServices.SymbolWriter;
 using System;
+using static UnityEditor.Progress;
 
 [Serializable]
 public class EquipInfo {
@@ -42,7 +43,17 @@ public class CharacterInfoLoader : MonoBehaviour
             ItemInfo_compact primary = new ItemInfo_compact();
             primary.itemcount = 1;
             primary.itemcode = 2001;
+            primary.properties.Add(new StringInt("muzzle", 0));
+            primary.properties.Add(new StringInt("under_rail", 0));
+            primary.properties.Add(new StringInt("side_rail", 0));
+            primary.properties.Add(new StringInt("upper_rail", 0));
+            primary.properties.Add(new StringInt("magazine", 0));
+            primary.properties.Add(new StringInt("stock", 0));
+            ak12.equipInfo.Helmet = null;
+            ak12.equipInfo.Armor = null;
+            ak12.equipInfo.Bag = null;
             ak12.equipInfo.Primary = primary;
+            ak12.equipInfo.Secondary = null;
             //보유 아이템 부여
             ItemInfo_compact itemInfo = new ItemInfo_compact();
             itemInfo.itemcode = 1001;
@@ -59,7 +70,17 @@ public class CharacterInfoLoader : MonoBehaviour
             ItemInfo_compact primary2 = new ItemInfo_compact();
             primary2.itemcount = 1;
             primary2.itemcode = 2002;
+            primary2.properties.Add(new StringInt("muzzle", 0));
+            primary2.properties.Add(new StringInt("under_rail", 0));
+            primary2.properties.Add(new StringInt("side_rail", 0));
+            primary2.properties.Add(new StringInt("upper_rail", 0));
+            primary2.properties.Add(new StringInt("magazine", 0));
+            primary2.properties.Add(new StringInt("stock", 0));
+            an94.equipInfo.Helmet = null;
+            an94.equipInfo.Armor = null;
+            an94.equipInfo.Bag = null;
             an94.equipInfo.Primary = primary2;
+            an94.equipInfo.Secondary = null;
             //보유 아이템 부여
             ItemInfo_compact itemInfo2 = new ItemInfo_compact();
             itemInfo2.itemcode = 1002;
