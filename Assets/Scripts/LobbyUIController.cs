@@ -156,6 +156,7 @@ public class LobbyUIController : MonoBehaviour
         if (dollInfo.equipInfo.Primary.itemcode != 0) {
             SelectedCharacter_Primary.equiped = dollInfo.equipInfo.Primary;
             print($"{dollInfo.name} - Primary({dollInfo.equipInfo.Primary.itemcode})");
+            SelectedCharacter_Primary.GetComponent<Image>().sprite = GetComponent<ItemImageLoader>().GetSprite(dollInfo.equipInfo.Primary.itemcode);
             Debug.LogWarning("주무기 부착물 표시 미구현");
         }
         else {
