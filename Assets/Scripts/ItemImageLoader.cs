@@ -5,7 +5,18 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemImageLoader : MonoBehaviour {
+
+    public static ItemImageLoader instance;
+
     public Dictionary<int, Sprite> List_ItemImage = new Dictionary<int, Sprite>();
+
+
+    private void Awake() {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(this);
+    }
 
     void Start() {
         Sprite[] sprites = Resources.LoadAll<Sprite>("ItemImage");

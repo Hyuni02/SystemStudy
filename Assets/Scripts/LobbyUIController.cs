@@ -161,6 +161,7 @@ public class LobbyUIController : MonoBehaviour
         }
         else {
             print($"{dollInfo.name} - No Primary");
+            SelectedCharacter_Primary.GetComponent<Image>().sprite = GetComponent<ItemImageLoader>().GetSprite(2000);
         }
         //보조무기
         if (dollInfo.equipInfo.Secondary.itemcode != 0) {
@@ -170,6 +171,7 @@ public class LobbyUIController : MonoBehaviour
         }
         else {
             print($"{dollInfo.name} - No Secondary");
+            SelectedCharacter_Primary.GetComponent<Image>().sprite = GetComponent<ItemImageLoader>().GetSprite(2100);
         }
         #endregion
         #region 보유 아이템 보여주기
