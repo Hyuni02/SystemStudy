@@ -7,6 +7,7 @@ TagManager:
   - CinemachineTarget
   - LobbyCamPos
   - Facility
+  - UI_Slot
   layers:
   - Default
   - TransparentFX
