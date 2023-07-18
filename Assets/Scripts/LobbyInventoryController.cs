@@ -74,6 +74,7 @@ public class LobbyInventoryController : MonoBehaviour {
 
 
     public void Start() {
+        Content_LobbyInventory.transform.parent.GetComponent<InventoryProperty>().Target_Inventory = nameof(SaveData);
         LoadLobbyInventory();
     }
 

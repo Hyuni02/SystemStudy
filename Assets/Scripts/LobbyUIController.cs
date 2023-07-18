@@ -127,6 +127,7 @@ public class LobbyUIController : MonoBehaviour
 
     void Update_Panel_SelectedCharacter(DollInfo dollInfo) {
         print($"Open {dollInfo.name}");
+        Panel_SelectedCharacter.transform.GetChild(5).GetChild(0).GetComponent<InventoryProperty>().Target_Inventory = dollInfo.name;
         #region ¿Â¬¯æ∆¿Ã≈€ ∫∏ø©¡÷±‚
         //«Ô∏‰
         if (dollInfo.equipInfo.Helmet.itemcode != 0) {

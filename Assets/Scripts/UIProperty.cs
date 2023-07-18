@@ -41,16 +41,22 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public void OnDrop(PointerEventData eventData) {
         GameObject drag = eventData.pointerDrag.gameObject;
         GameObject drop = gameObject;
-        //print($"드래그한 오브젝트 : {drag.name}");
-        //print($"드랍한 위치의 오브젝트 : {drop.name}");
+        print($"드래그한 오브젝트 : {drag.name}");
+        print($"드랍한 위치의 오브젝트 : {drop.name}");
 
         //foreach(var comp in drag.GetComponents<Component>()) {
         //    print(comp.GetType());
         //}
 
+        //드래그 불가능한 오브젝트를 드래그 (상점 아이템 드래그)
+        if(drag.GetComponent<UIProperty>().b_dragable == false) {
+            print("드래그 불가능 대상");
+            return;
+        }
+
         //드랍할 수 없는 위치에 드랍 (상점 아이템 위)
         if (!b_dropable) {
-            if(drop.GetComponent<EquipmentUI>().equiped != null) {
+            if(drop.GetComponent<EquipmentUI>()?.equiped != null) {
                 print("해당 슬롯에는 이미 아이템이 존재함");
             }
             else {
@@ -59,12 +65,21 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             return;
         }
 
+        bool trig = false;
         //장착칸에 드랍
         if (drop.CompareTag("UI_Slot")) {
             switch(GetComponent<EquipmentUI>().itemtype) {
                 case Type.pri:
+                    if (drag.GetComponent<Item_Primary>() != null) {
+                        print($"{drag.name} -> {drop.name}");
+                        return;
+                    }
                     break;
                 case Type.sec:
+                    if (drag.GetComponent<Item_Secondary>() != null) {
+                        print($"{drag.name} -> {drop.name}");
+                        return;
+                    }
                     break;
                 case Type.helmet:
                     if (drag.GetComponent<Item_Helmet>() != null) {
@@ -73,18 +88,85 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                     }
                     break;
                 case Type.body: 
+                    if(drag.GetComponent<Item_BodyArmor>() != null) {
+                        print($"{drag.name} -> {drop.name}");
+                        return;
+                    }
                     break;
-                case Type.bag: 
+                case Type.bag:
+                    if (drag.GetComponent<Item_Bag>() != null) {
+                        print($"{drag.name} -> {drop.name}");
+                        return;
+                    }
                     break;
-
             }
         }
-        //인벤에 드람
+        //인벤에 드랍
         else {
+            Transform from = drag.transform;
+            Transform to = drop.transform;
+
+            //아이템 위에 드랍
+            if(to.GetComponent<Item>() != null) {
+                //같은 인벤에 존재
+                if (from.parent.parent.GetComponent<UIProperty>() == to.parent.parent.GetComponent<UIProperty>() ||
+                from.parent.parent.GetComponent<UIProperty>() == to.GetComponent<UIProperty>()) {
+                    print("같은 인벤");
+                    trig = MoveItem(from, to);
+                }
+                //다른 인벤에 존재
+                else {
+                    print("다른 인벤");
+                    //용량이 가득차지 않는지 확인
+                    Debug.LogWarning("용량 미확인");
+                    trig = MoveItem(from, to);
+                }
+            }
+            //빈칸에 드랍
+            else {
+                print("인벤의 빈칸에 드랍");
+                //다른 인벤의 빈칸
+                if(from.parent.parent.GetComponent<UIProperty>() != to.GetComponent<UIProperty>()) {
+                    print($"{from.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에서 아이템 제거, {to.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에 아이템 추가");
+                    return;
+                }
+            }
 
         }
 
-        print("유효하지 않은 이동");
+        if(!trig) print("유효하지 않은 이동");
 
+    }
+
+
+    bool MoveItem(Transform from, Transform to) {
+        //같은 아이템
+        if (from.GetComponent<Item>().code == to.GetComponent<Item>().code) {
+            print("같은 아이템");
+            //아이템 겹치기
+            if (LoadItemData.instance.GetItemData(to.GetComponent<Item>().code).stack == 1) {
+                print("겹칠 수 없는 아이템");
+                return true;
+            }
+            if (from.GetComponent<Item>().count + to.GetComponent<Item>().count <= LoadItemData.instance.GetItemData(to.GetComponent<Item>().code).stack) {
+                print($"{to.name}의 스택 += {from.name}의 스택");
+                print($"{from.name} 삭제");
+                return true;
+            }
+            else {
+                print("to는 최대 스택");
+                print("from 차감");
+                return true;
+            }
+        }
+        //다른 아이템
+        else {
+            print("다른 아이템");
+            //파츠를 총기에 드랍
+            if (from.GetComponent<Item_Parts>() != null && to.GetComponent<Item_Weapon>() != null) {
+                Debug.LogWarning("무기-파츠 파일에서 장착가능 여부 확인 하기");
+            }
+        }
+        return false;
     }
 }
