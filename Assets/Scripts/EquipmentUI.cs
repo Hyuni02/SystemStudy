@@ -10,7 +10,7 @@ public class EquipmentUI : MonoBehaviour
     public ItemInfo_compact equiped;
     public bool isParts = false;
 
-    void Start()
+    void OnEnable()
     {
         CheckFull();
     }

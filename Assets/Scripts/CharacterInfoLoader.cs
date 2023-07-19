@@ -38,6 +38,7 @@ public class CharacterInfoLoader : MonoBehaviour
 {
     //보유 캐릭터 리스트
     public Dictionary<string, DollInfo> Characters = new Dictionary<string, DollInfo>();
+    public Dictionary<string, Sprite> Image_Characters = new Dictionary<string, Sprite>();
 
     void Start()
     {
@@ -105,13 +106,25 @@ public class CharacterInfoLoader : MonoBehaviour
     }
 
     void LoadCharacterInfo() {
+        //캐릭터 세이브 파일 불러오기
         DirectoryInfo dir = new DirectoryInfo($"{Application.dataPath}/Resources/Characters");
         foreach(var savefile in dir.GetFiles()) {
+            //메타 파일 무시
             if (savefile.Name.Contains(".meta")) continue;
+            //이미지 파일 무시
+            if (savefile.Name.Contains(".png")) continue;
+            //캐릭터 세이브 파일
             string jdata = File.ReadAllText($"{Application.dataPath}/Resources/Characters/{savefile.Name}");
             DollInfo dollinfo = JsonUtility.FromJson<DollInfo>(jdata);
             Characters.Add(dollinfo.name, dollinfo);
             print($"{savefile.Name} loaded \n {jdata}");
+        }
+
+        //캐릭터 이미지 파일 불러오기
+        Sprite[] sprites = Resources.LoadAll<Sprite>("Characters");
+
+        foreach (var sprite in sprites) {
+            Image_Characters.Add(sprite.name, sprite);
         }
     }
 

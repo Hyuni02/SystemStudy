@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ public class LobbyUIController : MonoBehaviour
 
     public GameObject Panel_Inven;
     public GameObject Panel_SelectedCharacter;
+    public GameObject Image_SelectedCharacter;
     EquipmentUI SelectedCharacter_Helmet;
     EquipmentUI SelectedCharacter_BodyArmor;
     EquipmentUI SelectedCharacter_Bag;
@@ -116,17 +118,19 @@ public class LobbyUIController : MonoBehaviour
         DollInfo dollInfo = null;
         if (name == null) {
             dollInfo = characterInfoLoader.Characters.First().Value;
+            characterindex = Array.IndexOf(characterInfoLoader.Characters.Keys.ToArray(), characterInfoLoader.Characters.First().Key);
         }
         else {
             dollInfo = characterInfoLoader.Characters[name];
+            characterindex = Array.IndexOf(characterInfoLoader.Characters.Keys.ToArray(), name);
         }
+        Image_SelectedCharacter.GetComponent<Image>().sprite = characterInfoLoader.Image_Characters[dollInfo.name];
         Update_Panel_SelectedCharacter(dollInfo);
-
+        print($"Open {dollInfo.name}");
         Panel_SelectedCharacter.SetActive(true);
     }
 
     void Update_Panel_SelectedCharacter(DollInfo dollInfo) {
-        print($"Open {dollInfo.name}");
         Panel_SelectedCharacter.transform.GetChild(5).GetChild(0).GetComponent<InventoryProperty>().Target_Inventory = dollInfo.name;
         #region 장착아이템 보여주기
         //헬멧
@@ -137,6 +141,7 @@ public class LobbyUIController : MonoBehaviour
         else {
             print($"{dollInfo.name} - No Helmet");
         }
+        SelectedCharacter_Helmet.CheckFull();
         //방탄복
         if (dollInfo.equipInfo.Armor.itemcode != 0) {
             SelectedCharacter_BodyArmor.equiped = dollInfo.equipInfo.Armor;
@@ -145,6 +150,7 @@ public class LobbyUIController : MonoBehaviour
         else {
             print($"{dollInfo.name} - No BodyArmor");
         }
+        SelectedCharacter_BodyArmor.CheckFull();
         //가방
         if (dollInfo.equipInfo.Bag.itemcode != 0) {
             SelectedCharacter_Bag.equiped = dollInfo.equipInfo.Bag;
@@ -153,6 +159,7 @@ public class LobbyUIController : MonoBehaviour
         else {
             print($"{dollInfo.name} - No Bag");
         }
+        SelectedCharacter_Bag.CheckFull();
         //주무기
         if (dollInfo.equipInfo.Primary.itemcode != 0) {
             SelectedCharacter_Primary.equiped = dollInfo.equipInfo.Primary;
@@ -164,6 +171,7 @@ public class LobbyUIController : MonoBehaviour
             print($"{dollInfo.name} - No Primary");
             SelectedCharacter_Primary.GetComponent<Image>().sprite = GetComponent<ItemImageLoader>().GetSprite(2000);
         }
+        SelectedCharacter_Primary.CheckFull();
         //보조무기
         if (dollInfo.equipInfo.Secondary.itemcode != 0) {
             SelectedCharacter_Secondary.equiped = dollInfo.equipInfo.Secondary;
@@ -172,8 +180,9 @@ public class LobbyUIController : MonoBehaviour
         }
         else {
             print($"{dollInfo.name} - No Secondary");
-            SelectedCharacter_Primary.GetComponent<Image>().sprite = GetComponent<ItemImageLoader>().GetSprite(2100);
+            SelectedCharacter_Secondary.GetComponent<Image>().sprite = GetComponent<ItemImageLoader>().GetSprite(2100);
         }
+        SelectedCharacter_Secondary.CheckFull();
         #endregion
         #region 보유 아이템 보여주기
         GetComponent<LobbyInventoryController>().Update_CapacitySlider(Slider_SelectedCharacter, ref dollInfo.inventory, dollInfo.Update_InvenCapacity());
@@ -183,5 +192,11 @@ public class LobbyUIController : MonoBehaviour
 
     void OpenPanel(int _index) {
         Panels[_index].gameObject.SetActive(true);
+    }
+
+    int characterindex = 0;
+    public void ChangeCharacter(int i) {
+        string name_next = characterInfoLoader.Characters.Keys.ElementAt(characterindex + i);
+        Open_Panel_SelectedCharacter(name_next);
     }
 }
