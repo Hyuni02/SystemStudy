@@ -196,7 +196,7 @@ public class LobbyUIController : MonoBehaviour
 
     int characterindex = 0;
     public void ChangeCharacter(int i) {
-        string name_next = characterInfoLoader.Characters.Keys.ElementAt(characterindex + i);
+        string name_next = characterInfoLoader.Characters.Keys.ElementAt((characterindex + i) % characterInfoLoader.Characters.Count);
         Open_Panel_SelectedCharacter(name_next);
     }
 }
