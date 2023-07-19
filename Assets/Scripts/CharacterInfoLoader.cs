@@ -52,6 +52,15 @@ public class CharacterInfoLoader : MonoBehaviour
             DollInfo ak12 = new DollInfo();
             //이름설정
             ak12.name = "AK-12";
+
+            ak12.equipInfo.Helmet = null;
+            ak12.equipInfo.Armor = null;
+            //가방 부여
+            ItemInfo_compact bag = new ItemInfo_compact();
+            bag.itemcount = 1;
+            bag.itemcode = 3001;
+            //TODO 가방 속성값 미부여 상태
+            ak12.equipInfo.Bag = bag;
             //주무기 부여
             ItemInfo_compact primary = new ItemInfo_compact();
             primary.itemcount = 1;
@@ -62,9 +71,6 @@ public class CharacterInfoLoader : MonoBehaviour
             primary.properties.Add(new StringInt("upper_rail", 0));
             primary.properties.Add(new StringInt("magazine", 0));
             primary.properties.Add(new StringInt("stock", 0));
-            ak12.equipInfo.Helmet = null;
-            ak12.equipInfo.Armor = null;
-            ak12.equipInfo.Bag = null;
             ak12.equipInfo.Primary = primary;
             ak12.equipInfo.Secondary = null;
             //보유 아이템 부여
@@ -79,6 +85,14 @@ public class CharacterInfoLoader : MonoBehaviour
             //기본인형 an94지급
             DollInfo an94 = new DollInfo();
             an94.name = "AN-94";
+            an94.equipInfo.Helmet = null;
+            //방어구 지급
+            ItemInfo_compact armor2 = new ItemInfo_compact();
+            armor2.itemcount = 1;
+            armor2.itemcode = 5001;
+            armor2.properties.Add(new StringInt("health", 40));
+            an94.equipInfo.Armor = armor2;
+            an94.equipInfo.Bag = null;
             //주무기 지급
             ItemInfo_compact primary2 = new ItemInfo_compact();
             primary2.itemcount = 1;
@@ -89,9 +103,6 @@ public class CharacterInfoLoader : MonoBehaviour
             primary2.properties.Add(new StringInt("upper_rail", 0));
             primary2.properties.Add(new StringInt("magazine", 0));
             primary2.properties.Add(new StringInt("stock", 0));
-            an94.equipInfo.Helmet = null;
-            an94.equipInfo.Armor = null;
-            an94.equipInfo.Bag = null;
             an94.equipInfo.Primary = primary2;
             an94.equipInfo.Secondary = null;
             //보유 아이템 부여
