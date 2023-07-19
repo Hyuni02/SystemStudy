@@ -8,6 +8,9 @@ TagManager:
   - LobbyCamPos
   - Facility
   - UI_Slot
+  - SaveData_Inven
+  - Selected_Inven
+  - Item
   layers:
   - Default
   - TransparentFX

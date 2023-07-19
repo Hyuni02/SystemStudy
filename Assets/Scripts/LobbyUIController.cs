@@ -114,76 +114,79 @@ public class LobbyUIController : MonoBehaviour
         GetComponent<LobbyInventoryController>().LoadLobbyInventory();
         Panel_Inven.SetActive(true);
     }
+    public DollInfo selected_dollinfo = null;
     void Open_Panel_SelectedCharacter(string name = null) {
-        DollInfo dollInfo = null;
+        selected_dollinfo = null;
         if (name == null) {
-            dollInfo = characterInfoLoader.Characters.First().Value;
+            selected_dollinfo = characterInfoLoader.Characters.First().Value;
             characterindex = Array.IndexOf(characterInfoLoader.Characters.Keys.ToArray(), characterInfoLoader.Characters.First().Key);
         }
         else {
-            dollInfo = characterInfoLoader.Characters[name];
+            selected_dollinfo = characterInfoLoader.Characters[name];
             characterindex = Array.IndexOf(characterInfoLoader.Characters.Keys.ToArray(), name);
         }
-        Image_SelectedCharacter.GetComponent<Image>().sprite = characterInfoLoader.Image_Characters[dollInfo.name];
-        Update_Panel_SelectedCharacter(dollInfo);
-        print($"Open {dollInfo.name}");
+        Image_SelectedCharacter.GetComponent<Image>().sprite = characterInfoLoader.Image_Characters[selected_dollinfo.name];
+        print(JsonUtility.ToJson(selected_dollinfo));
+        Update_Panel_SelectedCharacter(selected_dollinfo);
+        print($"Open {selected_dollinfo.name}");
         Panel_SelectedCharacter.SetActive(true);
     }
 
     void Update_Panel_SelectedCharacter(DollInfo dollInfo) {
         Panel_SelectedCharacter.transform.GetChild(5).GetChild(0).GetComponent<InventoryProperty>().Target_Inventory = dollInfo.name;
-        #region 장착아이템 보여주기
-        //헬멧
-        if (dollInfo.equipInfo.Helmet.itemcode != 0) {
-            SelectedCharacter_Helmet.equiped = dollInfo.equipInfo.Helmet;
-            print($"{dollInfo.name} - Helmet({dollInfo.equipInfo.Helmet.itemcode})");
-        }
-        else {
-            print($"{dollInfo.name} - No Helmet");
-        }
-        SelectedCharacter_Helmet.CheckFull();
-        //방탄복
-        if (dollInfo.equipInfo.Armor.itemcode != 0) {
-            SelectedCharacter_BodyArmor.equiped = dollInfo.equipInfo.Armor;
-            print($"{dollInfo.name} - BodyArmor({dollInfo.equipInfo.Armor.itemcode})");
-        }
-        else {
-            print($"{dollInfo.name} - No BodyArmor");
-        }
-        SelectedCharacter_BodyArmor.CheckFull();
-        //가방
-        if (dollInfo.equipInfo.Bag.itemcode != 0) {
-            SelectedCharacter_Bag.equiped = dollInfo.equipInfo.Bag;
-            print($"{dollInfo.name} - Bag({dollInfo.equipInfo.Bag.itemcode})");
-        }
-        else {
-            print($"{dollInfo.name} - No Bag");
-        }
-        SelectedCharacter_Bag.CheckFull();
-        //주무기
-        if (dollInfo.equipInfo.Primary.itemcode != 0) {
-            SelectedCharacter_Primary.equiped = dollInfo.equipInfo.Primary;
-            print($"{dollInfo.name} - Primary({dollInfo.equipInfo.Primary.itemcode})");
-            SelectedCharacter_Primary.GetComponent<Image>().sprite = GetComponent<ItemImageLoader>().GetSprite(dollInfo.equipInfo.Primary.itemcode);
-            Debug.LogWarning("주무기 부착물 표시 미구현");
-        }
-        else {
-            print($"{dollInfo.name} - No Primary");
-            SelectedCharacter_Primary.GetComponent<Image>().sprite = GetComponent<ItemImageLoader>().GetSprite(2000);
-        }
-        SelectedCharacter_Primary.CheckFull();
-        //보조무기
-        if (dollInfo.equipInfo.Secondary.itemcode != 0) {
-            SelectedCharacter_Secondary.equiped = dollInfo.equipInfo.Secondary;
-            print($"{dollInfo.name} - Secondary({dollInfo.equipInfo.Secondary.itemcode})");
-            Debug.LogWarning("보조무기 부착물 표시 미구현");
-        }
-        else {
-            print($"{dollInfo.name} - No Secondary");
-            SelectedCharacter_Secondary.GetComponent<Image>().sprite = GetComponent<ItemImageLoader>().GetSprite(2100);
-        }
-        SelectedCharacter_Secondary.CheckFull();
-        #endregion
+        //#region 장착아이템 보여주기
+        ////헬멧
+        //if (dollInfo.equipInfo.Helmet.itemcode != 0) {
+        //    SelectedCharacter_Helmet.equiped = dollInfo.equipInfo.Helmet;
+        //    print($"{dollInfo.name} - Helmet({dollInfo.equipInfo.Helmet.itemcode})");
+        //}
+        //else {
+        //    SelectedCharacter_Helmet.equiped.itemcode = 0;
+        //    print($"{dollInfo.name} - No Helmet");
+        //}
+        //SelectedCharacter_Helmet.CheckFull();
+        ////방탄복
+        //if (dollInfo.equipInfo.Armor.itemcode != 0) {
+        //    SelectedCharacter_BodyArmor.equiped = dollInfo.equipInfo.Armor;
+        //    print($"{dollInfo.name} - BodyArmor({dollInfo.equipInfo.Armor.itemcode})");
+        //}
+        //else {
+        //    print($"{dollInfo.name} - No BodyArmor");
+        //}
+        //SelectedCharacter_BodyArmor.CheckFull();
+        ////가방
+        //if (dollInfo.equipInfo.Bag.itemcode != 0) {
+        //    SelectedCharacter_Bag.equiped = dollInfo.equipInfo.Bag;
+        //    print($"{dollInfo.name} - Bag({dollInfo.equipInfo.Bag.itemcode})");
+        //}
+        //else {
+        //    print($"{dollInfo.name} - No Bag");
+        //}
+        //SelectedCharacter_Bag.CheckFull();
+        ////주무기
+        //if (dollInfo.equipInfo.Primary.itemcode != 0) {
+        //    SelectedCharacter_Primary.equiped = dollInfo.equipInfo.Primary;
+        //    print($"{dollInfo.name} - Primary({dollInfo.equipInfo.Primary.itemcode})");
+        //    SelectedCharacter_Primary.GetComponent<Image>().sprite = GetComponent<ItemImageLoader>().GetSprite(dollInfo.equipInfo.Primary.itemcode);
+        //    Debug.LogWarning("주무기 부착물 표시 미구현");
+        //}
+        //else {
+        //    print($"{dollInfo.name} - No Primary");
+        //    SelectedCharacter_Primary.GetComponent<Image>().sprite = GetComponent<ItemImageLoader>().GetSprite(2000);
+        //}
+        //SelectedCharacter_Primary.CheckFull();
+        ////보조무기
+        //if (dollInfo.equipInfo.Secondary.itemcode != 0) {
+        //    SelectedCharacter_Secondary.equiped = dollInfo.equipInfo.Secondary;
+        //    print($"{dollInfo.name} - Secondary({dollInfo.equipInfo.Secondary.itemcode})");
+        //    Debug.LogWarning("보조무기 부착물 표시 미구현");
+        //}
+        //else {
+        //    print($"{dollInfo.name} - No Secondary");
+        //    SelectedCharacter_Secondary.GetComponent<Image>().sprite = GetComponent<ItemImageLoader>().GetSprite(2100);
+        //}
+        //SelectedCharacter_Secondary.CheckFull();
+        //#endregion
         #region 보유 아이템 보여주기
         GetComponent<LobbyInventoryController>().Update_CapacitySlider(Slider_SelectedCharacter, ref dollInfo.inventory, dollInfo.Update_InvenCapacity());
         GetComponent<LobbyInventoryController>().ShowItems(ref Content_SelectedCharacterInventory, ref dollInfo.inventory);
@@ -196,7 +199,8 @@ public class LobbyUIController : MonoBehaviour
 
     int characterindex = 0;
     public void ChangeCharacter(int i) {
-        string name_next = characterInfoLoader.Characters.Keys.ElementAt((characterindex + i) % characterInfoLoader.Characters.Count);
+        float next = Mathf.Repeat(characterindex + i, characterInfoLoader.Characters.Count);
+        string name_next = characterInfoLoader.Characters.Keys.ElementAt((int)next);
         Open_Panel_SelectedCharacter(name_next);
     }
 }

@@ -12,7 +12,7 @@ public class EquipmentUI : MonoBehaviour
 
     void OnEnable()
     {
-        CheckFull();
+        //CheckFull();
     }
 
     public void CheckFull() {

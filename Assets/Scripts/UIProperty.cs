@@ -41,12 +41,7 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public void OnDrop(PointerEventData eventData) {
         GameObject drag = eventData.pointerDrag.gameObject;
         GameObject drop = gameObject;
-        print($"드래그한 오브젝트 : {drag.name}");
-        print($"드랍한 위치의 오브젝트 : {drop.name}");
-
-        //foreach(var comp in drag.GetComponents<Component>()) {
-        //    print(comp.GetType());
-        //}
+        print($"{drag.name} : {drop.name}");
 
         //드래그 불가능한 오브젝트를 드래그 (상점 아이템 드래그)
         if(drag.GetComponent<UIProperty>().b_dragable == false) {
@@ -107,7 +102,7 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             Transform to = drop.transform;
 
             //아이템 위에 드랍
-            if(to.GetComponent<Item>() != null) {
+            if (to.GetComponent<Item>() != null) {
                 //같은 인벤에 존재
                 if (from.parent.parent.GetComponent<UIProperty>() == to.parent.parent.GetComponent<UIProperty>() ||
                 from.parent.parent.GetComponent<UIProperty>() == to.GetComponent<UIProperty>()) {
@@ -125,17 +120,23 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             //빈칸에 드랍
             else {
                 print("인벤의 빈칸에 드랍");
-                //다른 인벤의 빈칸
-                if(from.parent.parent.GetComponent<UIProperty>() != to.GetComponent<UIProperty>()) {
-                    print($"{from.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에서 아이템 제거, {to.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에 아이템 추가");
+                //장착칸에서 인벤으로 이동
+                if (from.CompareTag("UI_Slot")) {
+                    print($"{from.GetComponent<EquipmentUI>().name} = null, {to.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에 아이템추가");
                     return;
+                }
+                //인벤에서 인벤으로 이동
+                else {
+                    //다른 인벤의 빈칸
+                    if (from.parent.parent.GetComponent<UIProperty>() != to.GetComponent<UIProperty>()) {
+                        print($"{from.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에서 아이템 제거, {to.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에 아이템 추가");
+                        return;
+                    }
                 }
             }
 
         }
-
         if(!trig) print("유효하지 않은 이동");
-
     }
 
 
@@ -165,6 +166,13 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             //파츠를 총기에 드랍
             if (from.GetComponent<Item_Parts>() != null && to.GetComponent<Item_Weapon>() != null) {
                 Debug.LogWarning("무기-파츠 파일에서 장착가능 여부 확인 하기");
+                Debug.LogWarning($"가능 : {from.name}을 {from.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}에서 삭제, {to.name}에 파츠 추가");
+                Debug.LogWarning($"불가능 : {from.name}을 {to.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}에 추가");
+                return true;
+            }
+            if (from.parent.parent.GetComponent<UIProperty>() != to.parent.parent.GetComponent<UIProperty>()) {
+                print($"{from.name}을 {to.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}에 추가");
+                return true;
             }
         }
         return false;
