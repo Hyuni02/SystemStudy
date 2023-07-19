@@ -114,7 +114,7 @@ public class LobbyUIController : MonoBehaviour
         GetComponent<LobbyInventoryController>().LoadLobbyInventory();
         Panel_Inven.SetActive(true);
     }
-    public DollInfo selected_dollinfo = null;
+    public static DollInfo selected_dollinfo = null;
     void Open_Panel_SelectedCharacter(string name = null) {
         selected_dollinfo = null;
         if (name == null) {
@@ -126,9 +126,9 @@ public class LobbyUIController : MonoBehaviour
             characterindex = Array.IndexOf(characterInfoLoader.Characters.Keys.ToArray(), name);
         }
         Image_SelectedCharacter.GetComponent<Image>().sprite = characterInfoLoader.Image_Characters[selected_dollinfo.name];
-        print(JsonUtility.ToJson(selected_dollinfo));
+        //print(JsonUtility.ToJson(selected_dollinfo));
         Update_Panel_SelectedCharacter(selected_dollinfo);
-        //print($"Open {selected_dollinfo.name}");
+        print($"Open {selected_dollinfo.name}");
         Panel_SelectedCharacter.SetActive(true);
     }
 

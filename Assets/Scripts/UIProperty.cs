@@ -5,15 +5,21 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler {
+    [Header("Item Property")]
+    public List<ItemInfo_compact> inven = new List<ItemInfo_compact>();
+    public int index = -1;
+    
     [Header("Button Property")]
     public bool b_dragable = false;
     public bool b_dropable = false;
 
     GameObject Main_Camera;
     LobbyInventoryController lobbyInventoryController = null;
+    CharacterInfoLoader characterInfoLoader = null;
     private void Start() {
         Main_Camera = GameObject.Find("Main Camera");
         lobbyInventoryController = Main_Camera.GetComponent<LobbyInventoryController>();
+        characterInfoLoader = Main_Camera.GetComponent<CharacterInfoLoader>();
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
@@ -33,6 +39,9 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
 
     public void OnEndDrag(PointerEventData eventData) {
         if (!b_dragable) return;
+        ResetDragImage();
+    }
+    void ResetDragImage() {
         lobbyInventoryController.dragImage.gameObject.SetActive(false);
         lobbyInventoryController.dragImage.GetComponent<Image>().sprite = null;
         lobbyInventoryController.dragCode = 0;
@@ -140,7 +149,10 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     }
 
 
-    bool MoveItem(Transform from, Transform to) {
+    bool MoveItem(Transform _from, Transform _to) {
+        UIProperty to = _to.GetComponent<UIProperty>();
+        UIProperty from = _from.GetComponent<UIProperty>();
+
         //같은 아이템
         if (from.GetComponent<Item>().code == to.GetComponent<Item>().code) {
             print("같은 아이템");
@@ -151,7 +163,16 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             }
             if (from.GetComponent<Item>().count + to.GetComponent<Item>().count <= LoadItemData.instance.GetItemData(to.GetComponent<Item>().code).stack) {
                 print($"{to.name}의 스택 += {from.name}의 스택");
+                to.inven[to.index].itemcount += from.GetComponent<Item>().count;
                 print($"{from.name} 삭제");
+                from.inven.RemoveAt(from.index);
+                characterInfoLoader.SaveCharacterInfo(LobbyUIController.selected_dollinfo.name);
+                characterInfoLoader.LoadCharacterInfo(LobbyUIController.selected_dollinfo.name);
+                lobbyInventoryController.SaveLobbyInventory();
+                lobbyInventoryController.LoadLobbyInventory();
+                lobbyInventoryController.dragImage.gameObject.SetActive(false);
+                lobbyInventoryController.dragImage.GetComponent<Image>().sprite = null;
+                lobbyInventoryController.dragCode = 0;
                 return true;
             }
             else {
@@ -166,12 +187,12 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             //파츠를 총기에 드랍
             if (from.GetComponent<Item_Parts>() != null && to.GetComponent<Item_Weapon>() != null) {
                 Debug.LogWarning("무기-파츠 파일에서 장착가능 여부 확인 하기");
-                Debug.LogWarning($"가능 : {from.name}을 {from.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}에서 삭제, {to.name}에 파츠 추가");
-                Debug.LogWarning($"불가능 : {from.name}을 {to.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}에 추가");
+                Debug.LogWarning($"가능 : {from.name}을 {from.transform.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}에서 삭제, {to.name}에 파츠 추가");
+                Debug.LogWarning($"불가능 : {from.name}을 {to.transform.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}에 추가");
                 return true;
             }
-            if (from.parent.parent.GetComponent<UIProperty>() != to.parent.parent.GetComponent<UIProperty>()) {
-                print($"{from.name}을 {to.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}에 추가");
+            if (from.transform.parent.parent.GetComponent<UIProperty>() != to.transform.parent.parent.GetComponent<UIProperty>()) {
+                print($"{from.name}을 {to.transform.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}에 추가");
                 return true;
             }
         }

@@ -243,20 +243,22 @@ public class LobbyInventoryController : MonoBehaviour {
         }
         list_item = list_item.OrderBy(x => x.itemcode).ToList();
 
-        foreach (var item in list_item) {
+        foreach (var item in list_item.Select((value, index) => (value, index))) {
             GameObject button = Instantiate(pre_Button);
             button.transform.SetParent(viewport, false);
-            button.name = $"{LoadItemData.instance.GetItemData(item.itemcode).name}({item.itemcode.ToString()})";
+            button.name = $"{LoadItemData.instance.GetItemData(item.value.itemcode).name}({item.value.itemcode.ToString()})";
+            button.GetComponent<UIProperty>().index = item.index;
+            button.GetComponent<UIProperty>().inven = list_item;
             button.GetComponent<UIProperty>().b_dragable = true;
             button.GetComponent<UIProperty>().b_dropable = true;
-            string itemName = GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.itemcode).name;
+            string itemName = GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.value.itemcode).name;
             button.transform.GetChild(0).GetComponent<TMP_Text>()?.SetText(itemName);
-            AddComponenttoButton(item, button);
+            AddComponenttoButton(item.value, button);
            
 
             //버튼에 갯수 표시
-            if (GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.itemcode).stack != 1) {
-                button.transform.GetChild(1).GetComponent<TMP_Text>()?.SetText(item.itemcount.ToString());
+            if (GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.value.itemcode).stack != 1) {
+                button.transform.GetChild(1).GetComponent<TMP_Text>()?.SetText(item.value.itemcount.ToString());
             }
             else {
                 button.transform.GetChild(1).GetComponent<TMP_Text>()?.SetText("");

@@ -116,10 +116,24 @@ public class CharacterInfoLoader : MonoBehaviour
         }
     }
 
-    void LoadCharacterInfo() {
+    public void LoadCharacterInfo(string name = null) {
         //캐릭터 세이브 파일 불러오기
         DirectoryInfo dir = new DirectoryInfo($"{Application.dataPath}/Resources/Characters");
-        foreach(var savefile in dir.GetFiles()) {
+        //if (name != null) {
+        //    foreach(var savefile in dir.GetFiles()) {
+        //        if (savefile.Name.Contains(name)) {
+        //            string jdata = File.ReadAllText($"{Application.dataPath}/Resources/Characters/{savefile.Name}");
+        //            DollInfo dollinfo = JsonUtility.FromJson<DollInfo>(jdata);
+        //            if (Characters.ContainsKey(name)) {
+        //                Characters.Remove(name);
+        //            }
+        //            Characters.Add(dollinfo.name, dollinfo);
+        //            print($"{savefile.Name} loaded \n {jdata}");
+        //        }
+        //    }
+        //}
+        //else {
+        foreach (var savefile in dir.GetFiles()) {
             //메타 파일 무시
             if (savefile.Name.Contains(".meta")) continue;
             //이미지 파일 무시
@@ -127,19 +141,26 @@ public class CharacterInfoLoader : MonoBehaviour
             //캐릭터 세이브 파일
             string jdata = File.ReadAllText($"{Application.dataPath}/Resources/Characters/{savefile.Name}");
             DollInfo dollinfo = JsonUtility.FromJson<DollInfo>(jdata);
+            if (Characters.ContainsKey(dollinfo.name)) {
+                Characters.Remove(dollinfo.name);
+            }
             Characters.Add(dollinfo.name, dollinfo);
             print($"{savefile.Name} loaded \n {jdata}");
         }
+        //}
 
         //캐릭터 이미지 파일 불러오기
         Sprite[] sprites = Resources.LoadAll<Sprite>("Characters");
 
         foreach (var sprite in sprites) {
+            if(Image_Characters.ContainsKey(sprite.name)) { 
+                Image_Characters.Remove(sprite.name);
+            }
             Image_Characters.Add(sprite.name, sprite);
         }
     }
 
-    void SaveCharacterInfo(string name = null) {
+    public void SaveCharacterInfo(string name = null) {
         if (name != null) {
             DollInfo dollinfo = new DollInfo();
             dollinfo = Characters[name];
