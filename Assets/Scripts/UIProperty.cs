@@ -100,6 +100,8 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                 case Type.bag:
                     if (drag.GetComponent<Item_Bag>() != null) {
                         print($"{drag.name} -> {drop.name}");
+
+                        aftermove();
                         return;
                     }
                     break;
@@ -132,6 +134,30 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                 //장착칸에서 인벤으로 이동
                 if (from.CompareTag("UI_Slot")) {
                     print($"{from.GetComponent<EquipmentUI>().name} = null, {to.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에 아이템추가");
+                    //from의 타입으로 캐릭터의 장착장비에 접근,
+                    string name = LobbyUIController.selected_dollinfo.name;
+                    //인벤에 아이템 추가
+                    ItemInfo_compact equiped = new ItemInfo_compact(from.GetComponent<EquipmentUI>().equiped);
+                    to.GetComponent<UIProperty>().inven.Add(equiped);
+                    //장착장비 = null
+                    switch (from.GetComponent<EquipmentUI>().itemtype) {
+                        case Type.helmet:
+                            characterInfoLoader.Characters[name].equipInfo.Helmet.itemcode = 0;
+                            break;
+                        case Type.body:
+                            characterInfoLoader.Characters[name].equipInfo.Armor.itemcode = 0;
+                            break;
+                        case Type.bag:
+                            characterInfoLoader.Characters[name].equipInfo.Bag.itemcode = 0;
+                            break;
+                        case Type.pri:
+                            characterInfoLoader.Characters[name].equipInfo.Primary.itemcode = 0;
+                            break;
+                        case Type.sec:
+                            characterInfoLoader.Characters[name].equipInfo.Secondary.itemcode = 0;
+                            break;
+                    }
+                    aftermove();
                     return;
                 }
                 //인벤에서 인벤으로 이동
@@ -173,6 +199,30 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         //장착칸에서 인벤(아이템 위)으로 이동
         if (from.CompareTag("UI_Slot")) {
             print($"{from.GetComponent<EquipmentUI>().name} = null, {to.transform.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에 아이템추가");
+            //from의 타입으로 캐릭터의 장착장비에 접근,
+            string name = LobbyUIController.selected_dollinfo.name;
+            //인벤에 아이템 추가
+            ItemInfo_compact equiped = new ItemInfo_compact(from.GetComponent<EquipmentUI>().equiped);
+            to.inven.Add(equiped);
+            //장착장비 = null
+            switch (from.GetComponent<EquipmentUI>().itemtype) {
+                case Type.helmet:
+                    characterInfoLoader.Characters[name].equipInfo.Helmet.itemcode = 0;
+                    break;
+                case Type.body:
+                    characterInfoLoader.Characters[name].equipInfo.Armor.itemcode = 0;
+                    break;
+                case Type.bag:
+                    characterInfoLoader.Characters[name].equipInfo.Bag.itemcode = 0;
+                    break;
+                case Type.pri:
+                    characterInfoLoader.Characters[name].equipInfo.Primary.itemcode = 0;
+                    break;
+                case Type.sec:
+                    characterInfoLoader.Characters[name].equipInfo.Secondary.itemcode = 0;
+                    break;
+            }
+            aftermove();
             return true;
         }
 
