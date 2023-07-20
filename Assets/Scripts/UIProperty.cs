@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.ReorderableList;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -75,32 +76,87 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             switch(GetComponent<EquipmentUI>().itemtype) {
                 case Type.pri:
                     if (drag.GetComponent<Item_Primary>() != null) {
-                        print($"{drag.name} -> {drop.name}");
+                        //print($"{drag.name} -> {drop.name}");
+                        //슬롯에 아이템 추가
+                        ItemInfo_compact pri = new ItemInfo_compact();
+                        pri.itemcode = drag.GetComponent<Item_Primary>().code;
+                        lobbyInventoryController.SetItemProps(ref pri);
+                        pri.properties[0].it = (int)drag.GetComponent<Item_Primary>().muzzle;
+                        pri.properties[1].it = (int)drag.GetComponent<Item_Primary>().under_rail;
+                        pri.properties[2].it = (int)drag.GetComponent<Item_Primary>().side_rail;
+                        pri.properties[3].it = (int)drag.GetComponent<Item_Primary>().upper_rail;
+                        pri.properties[4].it = (int)drag.GetComponent<Item_Primary>().magazine;
+                        pri.properties[5].it = (int)drag.GetComponent<Item_Primary>().stock;
+                        characterInfoLoader.Characters[LobbyUIController.selected_dollinfo.name].equipInfo.Primary = pri;
+                        //인벤에서 아이템 제거
+                        drag.GetComponent<UIProperty>().inven.RemoveAt(drag.GetComponent<UIProperty>().index);
+                        aftermove();
                         return;
                     }
                     break;
                 case Type.sec:
                     if (drag.GetComponent<Item_Secondary>() != null) {
-                        print($"{drag.name} -> {drop.name}");
+                        //print($"{drag.name} -> {drop.name}");
+                        //슬롯에 아이템 추가
+                        ItemInfo_compact sec = new ItemInfo_compact();
+                        sec.itemcode = drag.GetComponent<Item_Secondary>().code;
+                        lobbyInventoryController.SetItemProps(ref sec);
+                        sec.properties[0].it = (int)drag.GetComponent<Item_Secondary>().muzzle;
+                        sec.properties[1].it = (int)drag.GetComponent<Item_Secondary>().under_rail;
+                        sec.properties[2].it = (int)drag.GetComponent<Item_Secondary>().side_rail;
+                        sec.properties[3].it = (int)drag.GetComponent<Item_Secondary>().upper_rail;
+                        sec.properties[4].it = (int)drag.GetComponent<Item_Secondary>().magazine;
+                        sec.properties[5].it = (int)drag.GetComponent<Item_Secondary>().stock;
+                        characterInfoLoader.Characters[LobbyUIController.selected_dollinfo.name].equipInfo.Secondary = sec;
+                        //인벤에서 아이템 제거
+                        drag.GetComponent<UIProperty>().inven.RemoveAt(drag.GetComponent<UIProperty>().index);
+                        aftermove();
                         return;
                     }
                     break;
                 case Type.helmet:
                     if (drag.GetComponent<Item_Helmet>() != null) {
-                        print($"{drag.name} -> {drop.name}");
+                        //print($"{drag.name} -> {drop.name}");
+                        //슬롯에 아이템 추가
+                        ItemInfo_compact helmet = new ItemInfo_compact();
+                        helmet.itemcode = drag.GetComponent<Item_Helmet>().code;
+                        lobbyInventoryController.SetItemProps(ref helmet);
+                        //내구도 설정
+                        helmet.properties[0].it = (int)drag.GetComponent<Item_Helmet>().health;
+                        characterInfoLoader.Characters[LobbyUIController.selected_dollinfo.name].equipInfo.Helmet = helmet;
+                        //인벤에서 아이템 제거
+                        drag.GetComponent<UIProperty>().inven.RemoveAt(drag.GetComponent<UIProperty>().index);
+                        aftermove();
                         return;
                     }
                     break;
                 case Type.body: 
                     if(drag.GetComponent<Item_BodyArmor>() != null) {
-                        print($"{drag.name} -> {drop.name}");
+                        //print($"{drag.name} -> {drop.name}");
+                        //슬롯에 아이템 추가
+                        ItemInfo_compact bodyarmor = new ItemInfo_compact();
+                        bodyarmor.itemcode = drag.GetComponent<Item_BodyArmor>().code;
+                        lobbyInventoryController.SetItemProps(ref bodyarmor);
+                        //내구도 설정
+                        bodyarmor.properties[0].it = (int)drag.GetComponent<Item_BodyArmor>().health;
+                        characterInfoLoader.Characters[LobbyUIController.selected_dollinfo.name].equipInfo.Armor = bodyarmor;
+                        //인벤에서 아이템 제거
+                        drag.GetComponent<UIProperty>().inven.RemoveAt(drag.GetComponent<UIProperty>().index);
+                        aftermove();
                         return;
                     }
                     break;
                 case Type.bag:
                     if (drag.GetComponent<Item_Bag>() != null) {
-                        print($"{drag.name} -> {drop.name}");
-
+                        //print($"{drag.name} -> {drop.name}");
+                        //슬롯에 아이템 추가
+                        ItemInfo_compact bag = new ItemInfo_compact();
+                        bag.itemcode = drag.GetComponent<Item_Bag>().code;
+                        lobbyInventoryController.SetItemProps(ref bag);
+                        Debug.LogWarning("가방 속성정보 가져오기");
+                        characterInfoLoader.Characters[LobbyUIController.selected_dollinfo.name].equipInfo.Bag = bag;
+                        //인벤에서 아이템 제거
+                        drag.GetComponent<UIProperty>().inven.RemoveAt(drag.GetComponent<UIProperty>().index);
                         aftermove();
                         return;
                     }

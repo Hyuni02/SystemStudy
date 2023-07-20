@@ -95,7 +95,7 @@ public class LobbyInventoryController : MonoBehaviour {
         }
     }
 
-    void SetItemProps(ref ItemInfo_compact item) {
+    public void SetItemProps(ref ItemInfo_compact item) {
         int code = item.itemcode;
         string[] props = LoadItemData.instance.Data_Item.Find(x => x.code == code).etc;
         #region 내부 정보 저장
@@ -117,6 +117,8 @@ public class LobbyInventoryController : MonoBehaviour {
                         item.properties.Add(new StringInt("count", 0));
                         break;
                 }
+                break;
+            case 3:
                 break;
             case 4:
             case 5:
