@@ -13,7 +13,7 @@ public class LobbyUIController : MonoBehaviour
 
     LobbyCameraController cameraController;
     CharacterInfoLoader characterInfoLoader;
-    int index;
+    public int index;
 
     public Transform Content_SelectedCharacterInventory;
     public Slider Slider_SelectedCharacter;

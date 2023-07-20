@@ -149,9 +149,11 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     }
 
     void aftermove() {
-        characterInfoLoader.SaveCharacterInfo(LobbyUIController.selected_dollinfo.name);
-        characterInfoLoader.LoadCharacterInfo(LobbyUIController.selected_dollinfo.name);
-        LobbyUIController.instance.Open_Panel_SelectedCharacter(LobbyUIController.selected_dollinfo.name);
+        if (LobbyUIController.instance.index != 0) {
+            characterInfoLoader.SaveCharacterInfo(LobbyUIController.selected_dollinfo.name);
+            characterInfoLoader.LoadCharacterInfo(LobbyUIController.selected_dollinfo.name);
+            LobbyUIController.instance.Open_Panel_SelectedCharacter(LobbyUIController.selected_dollinfo.name);
+        }
         lobbyInventoryController.SaveLobbyInventory();
         lobbyInventoryController.LoadLobbyInventory();
         lobbyInventoryController.dragImage.gameObject.SetActive(false);
@@ -171,16 +173,20 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                 return true;
             }
             if (from.GetComponent<Item>().count + to.GetComponent<Item>().count <= LoadItemData.instance.GetItemData(to.GetComponent<Item>().code).stack) {
-                print($"{to.name}의 스택 += {from.name}의 스택");
+                //print($"{to.name}의 스택 += {from.name}의 스택");
                 to.inven[to.index].itemcount += from.GetComponent<Item>().count;
-                print($"{from.name} 삭제");
+                //print($"{from.name} 삭제");
                 from.inven.RemoveAt(from.index);
                 aftermove();
                 return true;
             }
             else {
-                print("to는 최대 스택");
-                print("from 차감");
+                int max = LoadItemData.instance.GetItemData(to.GetComponent<Item>().code).stack;
+                //print($"from 차감 {max - to.GetComponent<Item>().count}");
+                from.inven[from.index].itemcount -= max - to.GetComponent<Item>().count;
+                //print("to는 최대 스택" + max);
+                to.inven[to.index].itemcount = max;
+                aftermove();
                 return true;
             }
         }
