@@ -68,7 +68,7 @@ public class LobbyInventoryController : MonoBehaviour {
 
     [SerializeField]
     public Slider Slider_Inven;
-    public float maxCapacity = 100f;
+    public float maxCapacity = 500f;
     public float currentCapacity = 0f;
     public List<ItemInfo_compact> SaveData;
 

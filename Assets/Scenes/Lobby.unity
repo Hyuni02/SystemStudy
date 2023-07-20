@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028331, g: 0.2257133, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -614,6 +614,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30aa7ad3671a3584aab28cda1add2cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inven: []
+  index: -1
   b_dragable: 0
   b_dropable: 1
 --- !u!114 &99977330
@@ -769,6 +771,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30aa7ad3671a3584aab28cda1add2cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inven: []
+  index: -1
   b_dragable: 0
   b_dropable: 1
 --- !u!1 &134063124
@@ -1665,7 +1669,7 @@ MonoBehaviour:
   Panel_LobbyInventory: {fileID: 1238283683}
   Content_LobbyInventory: {fileID: 69776837}
   Slider_Inven: {fileID: 1822046351}
-  maxCapacity: 100
+  maxCapacity: 500
   currentCapacity: 0
   SaveData: []
 --- !u!114 &234471162
@@ -3134,6 +3138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30aa7ad3671a3584aab28cda1add2cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inven: []
+  index: -1
   b_dragable: 0
   b_dropable: 1
 --- !u!1001 &543107795
@@ -3514,6 +3520,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30aa7ad3671a3584aab28cda1add2cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inven: []
+  index: -1
   b_dragable: 0
   b_dropable: 1
 --- !u!114 &590699850
@@ -4569,6 +4577,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30aa7ad3671a3584aab28cda1add2cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inven: []
+  index: -1
   b_dragable: 0
   b_dropable: 1
 --- !u!114 &688180228
@@ -5348,6 +5358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30aa7ad3671a3584aab28cda1add2cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inven: []
+  index: -1
   b_dragable: 0
   b_dropable: 1
 --- !u!1 &786547896
@@ -7783,6 +7795,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30aa7ad3671a3584aab28cda1add2cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inven: []
+  index: -1
   b_dragable: 0
   b_dropable: 1
 --- !u!114 &1164065870
@@ -7920,6 +7934,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30aa7ad3671a3584aab28cda1add2cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inven: []
+  index: -1
   b_dragable: 0
   b_dropable: 1
 --- !u!114 &1165908790
@@ -8202,6 +8218,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30aa7ad3671a3584aab28cda1add2cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inven: []
+  index: -1
   b_dragable: 0
   b_dropable: 1
 --- !u!1 &1198645543
@@ -9255,6 +9273,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30aa7ad3671a3584aab28cda1add2cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inven: []
+  index: -1
   b_dragable: 0
   b_dropable: 1
 --- !u!114 &1306259701
@@ -10616,6 +10636,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30aa7ad3671a3584aab28cda1add2cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inven: []
+  index: -1
   b_dragable: 0
   b_dropable: 1
 --- !u!1 &1558691427
@@ -12097,6 +12119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30aa7ad3671a3584aab28cda1add2cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inven: []
+  index: -1
   b_dragable: 0
   b_dropable: 1
 --- !u!114 &1689629656
@@ -13322,6 +13346,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30aa7ad3671a3584aab28cda1add2cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inven: []
+  index: -1
   b_dragable: 0
   b_dropable: 1
 --- !u!114 &1908428408
@@ -14211,6 +14237,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30aa7ad3671a3584aab28cda1add2cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inven: []
+  index: -1
   b_dragable: 0
   b_dropable: 1
 --- !u!114 &2033240403
@@ -14601,6 +14629,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30aa7ad3671a3584aab28cda1add2cf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inven: []
+  index: -1
   b_dragable: 0
   b_dropable: 1
 --- !u!1 &2133019699

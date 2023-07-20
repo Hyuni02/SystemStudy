@@ -148,7 +148,16 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         if(!trig) print("유효하지 않은 이동");
     }
 
-
+    void aftermove() {
+        characterInfoLoader.SaveCharacterInfo(LobbyUIController.selected_dollinfo.name);
+        characterInfoLoader.LoadCharacterInfo(LobbyUIController.selected_dollinfo.name);
+        LobbyUIController.instance.Open_Panel_SelectedCharacter(LobbyUIController.selected_dollinfo.name);
+        lobbyInventoryController.SaveLobbyInventory();
+        lobbyInventoryController.LoadLobbyInventory();
+        lobbyInventoryController.dragImage.gameObject.SetActive(false);
+        lobbyInventoryController.dragImage.GetComponent<Image>().sprite = null;
+        lobbyInventoryController.dragCode = 0;
+    }
     bool MoveItem(Transform _from, Transform _to) {
         UIProperty to = _to.GetComponent<UIProperty>();
         UIProperty from = _from.GetComponent<UIProperty>();
@@ -166,14 +175,7 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                 to.inven[to.index].itemcount += from.GetComponent<Item>().count;
                 print($"{from.name} 삭제");
                 from.inven.RemoveAt(from.index);
-                characterInfoLoader.SaveCharacterInfo(LobbyUIController.selected_dollinfo.name);
-                characterInfoLoader.LoadCharacterInfo(LobbyUIController.selected_dollinfo.name);
-                LobbyUIController.instance.Open_Panel_SelectedCharacter(LobbyUIController.selected_dollinfo.name);
-                lobbyInventoryController.SaveLobbyInventory();
-                lobbyInventoryController.LoadLobbyInventory();
-                lobbyInventoryController.dragImage.gameObject.SetActive(false);
-                lobbyInventoryController.dragImage.GetComponent<Image>().sprite = null;
-                lobbyInventoryController.dragCode = 0;
+                aftermove();
                 return true;
             }
             else {
@@ -193,7 +195,7 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                 return true;
             }
             if (from.transform.parent.parent.GetComponent<UIProperty>() != to.transform.parent.parent.GetComponent<UIProperty>()) {
-                print($"{from.name}을 {to.transform.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}에 추가");
+                print($"{from.name}을 {from.transform.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에서 아이템 제거, {to.transform.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}에 추가");
                 return true;
             }
         }
