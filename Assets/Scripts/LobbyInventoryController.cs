@@ -38,6 +38,14 @@ public class ItemInfo_compact {
     public int itemcount;
     [SerializeField]
     public List<StringInt> properties = new List<StringInt>();
+
+    public ItemInfo_compact(ItemInfo_compact info = null) {
+        if (info != null) {
+            itemcode = info.itemcode;
+            itemcount = info.itemcount;
+            properties = info.properties;
+        }
+    }
 }
 
 [Serializable]
@@ -243,6 +251,7 @@ public class LobbyInventoryController : MonoBehaviour {
         }
         list_item = list_item.OrderBy(x => x.itemcode).ToList();
 
+        viewport.parent.GetComponent<UIProperty>().inven = list_item;
         foreach (var item in list_item.Select((value, index) => (value, index))) {
             GameObject button = Instantiate(pre_Button);
             button.transform.SetParent(viewport, false);

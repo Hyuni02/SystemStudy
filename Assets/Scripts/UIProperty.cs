@@ -139,6 +139,12 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                     //다른 인벤의 빈칸
                     if (from.parent.parent.GetComponent<UIProperty>() != to.GetComponent<UIProperty>()) {
                         print($"{from.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에서 아이템 제거, {to.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에 아이템 추가");
+                        ItemInfo_compact moveitem = new ItemInfo_compact(from.GetComponent<UIProperty>().inven[from.GetComponent<UIProperty>().index]);
+                        //to 인벤에 추가
+                        to.GetComponent<UIProperty>().inven.Add(moveitem);
+                        //from 인벤에서 제거
+                        from.GetComponent<UIProperty>().inven.RemoveAt(from.GetComponent<UIProperty>().index);
+                        aftermove();
                         return;
                     }
                 }
@@ -202,6 +208,12 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
             }
             if (from.transform.parent.parent.GetComponent<UIProperty>() != to.transform.parent.parent.GetComponent<UIProperty>()) {
                 print($"{from.name}을 {from.transform.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에서 아이템 제거, {to.transform.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}에 추가");
+                ItemInfo_compact moveitem = new ItemInfo_compact(from.GetComponent<UIProperty>().inven[from.GetComponent<UIProperty>().index]);
+                //to 인벤에 추가
+                to.inven.Add(moveitem);
+                //from 인벤에서 제거
+                from.inven.RemoveAt(from.GetComponent<UIProperty>().index);
+                aftermove();
                 return true;
             }
         }
