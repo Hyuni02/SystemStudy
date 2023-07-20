@@ -168,6 +168,7 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                 from.inven.RemoveAt(from.index);
                 characterInfoLoader.SaveCharacterInfo(LobbyUIController.selected_dollinfo.name);
                 characterInfoLoader.LoadCharacterInfo(LobbyUIController.selected_dollinfo.name);
+                LobbyUIController.instance.Open_Panel_SelectedCharacter(LobbyUIController.selected_dollinfo.name);
                 lobbyInventoryController.SaveLobbyInventory();
                 lobbyInventoryController.LoadLobbyInventory();
                 lobbyInventoryController.dragImage.gameObject.SetActive(false);

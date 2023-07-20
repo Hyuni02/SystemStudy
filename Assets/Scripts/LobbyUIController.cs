@@ -9,6 +9,8 @@ using UnityEngine.UI;
 
 public class LobbyUIController : MonoBehaviour
 {
+    public static LobbyUIController instance;
+
     LobbyCameraController cameraController;
     CharacterInfoLoader characterInfoLoader;
     int index;
@@ -34,6 +36,13 @@ public class LobbyUIController : MonoBehaviour
     EquipmentUI SelectedCharacter_Secondary_Mag;
 
     public GameObject[] Panels;
+
+    private void Awake() {
+        if(instance == null)
+            instance = this;
+        else
+            Destroy(this);
+    }
 
     void Start()
     {
@@ -115,7 +124,7 @@ public class LobbyUIController : MonoBehaviour
         Panel_Inven.SetActive(true);
     }
     public static DollInfo selected_dollinfo = null;
-    void Open_Panel_SelectedCharacter(string name = null) {
+    public void Open_Panel_SelectedCharacter(string name = null) {
         selected_dollinfo = null;
         if (name == null) {
             selected_dollinfo = characterInfoLoader.Characters.First().Value;
@@ -127,8 +136,8 @@ public class LobbyUIController : MonoBehaviour
         }
         Image_SelectedCharacter.GetComponent<Image>().sprite = characterInfoLoader.Image_Characters[selected_dollinfo.name];
         //print(JsonUtility.ToJson(selected_dollinfo));
-        Update_Panel_SelectedCharacter(selected_dollinfo);
         print($"Open {selected_dollinfo.name}");
+        Update_Panel_SelectedCharacter(selected_dollinfo);
         Panel_SelectedCharacter.SetActive(true);
     }
 
