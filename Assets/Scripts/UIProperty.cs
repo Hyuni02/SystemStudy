@@ -138,7 +138,7 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                 else {
                     //다른 인벤의 빈칸
                     if (from.parent.parent.GetComponent<UIProperty>() != to.GetComponent<UIProperty>()) {
-                        print($"{from.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에서 아이템 제거, {to.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에 아이템 추가");
+                        //print($"{from.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에서 아이템 제거, {to.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에 아이템 추가");
                         ItemInfo_compact moveitem = new ItemInfo_compact(from.GetComponent<UIProperty>().inven[from.GetComponent<UIProperty>().index]);
                         //to 인벤에 추가
                         to.GetComponent<UIProperty>().inven.Add(moveitem);
@@ -170,13 +170,19 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         UIProperty to = _to.GetComponent<UIProperty>();
         UIProperty from = _from.GetComponent<UIProperty>();
 
+        //장착칸에서 인벤(아이템 위)으로 이동
+        if (from.CompareTag("UI_Slot")) {
+            print($"{from.GetComponent<EquipmentUI>().name} = null, {to.transform.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에 아이템추가");
+            return true;
+        }
+
         //같은 아이템
         if (from.GetComponent<Item>().code == to.GetComponent<Item>().code) {
-            print("같은 아이템");
+            //print("같은 아이템");
             //아이템 겹치기
             if (LoadItemData.instance.GetItemData(to.GetComponent<Item>().code).stack == 1) {
-                print("겹칠 수 없는 아이템");
-                return true;
+                //print("겹칠 수 없는 아이템");
+                return false;
             }
             if (from.GetComponent<Item>().count + to.GetComponent<Item>().count <= LoadItemData.instance.GetItemData(to.GetComponent<Item>().code).stack) {
                 //print($"{to.name}의 스택 += {from.name}의 스택");
@@ -198,7 +204,7 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         }
         //다른 아이템
         else {
-            print("다른 아이템");
+            //print("다른 아이템");
             //파츠를 총기에 드랍
             if (from.GetComponent<Item_Parts>() != null && to.GetComponent<Item_Weapon>() != null) {
                 Debug.LogWarning("무기-파츠 파일에서 장착가능 여부 확인 하기");
@@ -207,7 +213,7 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
                 return true;
             }
             if (from.transform.parent.parent.GetComponent<UIProperty>() != to.transform.parent.parent.GetComponent<UIProperty>()) {
-                print($"{from.name}을 {from.transform.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에서 아이템 제거, {to.transform.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}에 추가");
+                //print($"{from.name}을 {from.transform.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}의 인벤토리에서 아이템 제거, {to.transform.parent.parent.GetComponent<InventoryProperty>().Target_Inventory}에 추가");
                 ItemInfo_compact moveitem = new ItemInfo_compact(from.GetComponent<UIProperty>().inven[from.GetComponent<UIProperty>().index]);
                 //to 인벤에 추가
                 to.inven.Add(moveitem);
