@@ -36,15 +36,27 @@ public class DollInfo {
 
 public class CharacterInfoLoader : MonoBehaviour
 {
+    public static CharacterInfoLoader instance;
+
     //보유 캐릭터 리스트
     public Dictionary<string, DollInfo> Characters = new Dictionary<string, DollInfo>();
     public Dictionary<string, Sprite> Image_Characters = new Dictionary<string, Sprite>();
+
+    private void Awake() {
+        if (instance == null) {
+            instance = this;
+        }
+        else {
+            Destroy(this);
+        }
+    }
 
     void Start()
     {
         //캐릭터 정보 읽어오기
         LoadCharacterInfo();
 
+        //게임 첫 시작
         if(Characters.Count == 0) {
             print("No Characters, Create AK-12, AN-94");
 

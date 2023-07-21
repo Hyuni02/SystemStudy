@@ -93,10 +93,7 @@ public class LobbyUIController : MonoBehaviour
                     break;
                 case LobbyFacility.FacilityType.Sever:
                     index = 4;
-                    Debug.LogWarning("서버실 열기 미구현");
-                    //보유한 캐릭터 수 만큼 이미지 생성
-                    //캐릭터 이미지 넣기
-                    //선택된 캐릭터 외곽선 강조(default = 0)
+                    LobbyServerController.instance.OpenServer();
                     break;
                 case LobbyFacility.FacilityType.Counter:
                     index = 5;
