@@ -128,9 +128,15 @@ public class CharacterInfoLoader : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 캐릭터 세이브 파일 불러오기
+    /// </summary>
+    /// <param name="name">미지정 시 전체 불러오기, 지정 시 지정 캐릭터만 불러오기</param>
     public void LoadCharacterInfo(string name = null) {
         //캐릭터 세이브 파일 불러오기
         DirectoryInfo dir = new DirectoryInfo($"{Application.dataPath}/Resources/Characters");
+
+        //지정한 캐릭터 정보만 불러오기
         if (name != null) {
             string jdata = File.ReadAllText($"{Application.dataPath}/Resources/Characters/{name}.txt");
             DollInfo dollinfo = JsonUtility.FromJson<DollInfo>(jdata);
@@ -140,6 +146,7 @@ public class CharacterInfoLoader : MonoBehaviour
             Characters.Add(dollinfo.name, dollinfo);
             print($"{name}.txt loaded \n {jdata}");
         }
+        //모든 캐릭터 정보 불러오기
         else {
             foreach (var savefile in dir.GetFiles()) {
                 //메타 파일 무시
@@ -157,18 +164,25 @@ public class CharacterInfoLoader : MonoBehaviour
             }
         }
 
-        //캐릭터 이미지 파일 불러오기
+        #region 캐릭터 이미지 파일 불러오기
         Sprite[] sprites = Resources.LoadAll<Sprite>("Characters");
-
         foreach (var sprite in sprites) {
             if(Image_Characters.ContainsKey(sprite.name)) { 
                 Image_Characters.Remove(sprite.name);
             }
+            //기본사진 : 이름.png
+            //서버사진 : 이름_server.png
             Image_Characters.Add(sprite.name, sprite);
         }
+        #endregion
     }
 
+    /// <summary>
+    /// 캐릭터 정보 저장
+    /// </summary>
+    /// <param name="name">미지정 시 전체 저장, 지정 시 지정 캐릭터만 저장</param>
     public void SaveCharacterInfo(string name = null) {
+        //캐릭터 지정 시 지정 캐릭터만 저장
         if (name != null) {
             DollInfo dollinfo = new DollInfo();
             dollinfo = Characters[name];
@@ -176,6 +190,7 @@ public class CharacterInfoLoader : MonoBehaviour
             File.WriteAllText($"{Application.dataPath}/Resources/Characters/{name}.txt", jdata2);
             print($"Save {name} Data");
         }
+        //캐릭터 미지정 시 전체 저장
         else {
             foreach(var character in Characters) {
                 DollInfo dollinfo = new DollInfo();

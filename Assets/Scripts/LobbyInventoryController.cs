@@ -247,17 +247,31 @@ public class LobbyInventoryController : MonoBehaviour {
         button.GetComponent<Item>()?.Init(item);
         #endregion
     }
+    /// <summary>
+    /// 지정한 viewport에 list_item을 버튼으로 생성
+    /// </summary>
+    /// <param name="viewport">버튼을 생성할 위치(부모)</param>
+    /// <param name="list_item">생성할 버튼 리스트</param>
     public void ShowItems(ref Transform viewport,ref List<ItemInfo_compact> list_item) {
+        //viewport 초기화
         for (int i = 0; i < viewport.childCount; i++) {
             Destroy(viewport.GetChild(i).gameObject);
         }
+
+        //리스트 정렬
         list_item = list_item.OrderBy(x => x.itemcode).ToList();
 
+        #region 버튼 생성
+        //버튼이 소속된 인벤 명시
         viewport.parent.GetComponent<UIProperty>().inven = list_item;
+
         foreach (var item in list_item.Select((value, index) => (value, index))) {
             GameObject button = Instantiate(pre_Button);
+            //버튼 부모 설정
             button.transform.SetParent(viewport, false);
+            //버튼 이름 설정
             button.name = $"{LoadItemData.instance.GetItemData(item.value.itemcode).name}({item.value.itemcode.ToString()})";
+            //버튼 속성 설정 (드래그, 드랍 여부)
             button.GetComponent<UIProperty>().index = item.index;
             button.GetComponent<UIProperty>().inven = list_item;
             button.GetComponent<UIProperty>().b_dragable = true;
@@ -266,23 +280,26 @@ public class LobbyInventoryController : MonoBehaviour {
             button.transform.GetChild(0).GetComponent<TMP_Text>()?.SetText(itemName);
             AddComponenttoButton(item.value, button);
            
-
             //버튼에 갯수 표시
-            if (GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.value.itemcode).stack != 1) {
+            if (GetComponent<LoadItemData>().Data_Item.Find(x => x.code == item.value.itemcode).stack != 1)
                 button.transform.GetChild(1).GetComponent<TMP_Text>()?.SetText(item.value.itemcount.ToString());
-            }
-            else {
+            else 
                 button.transform.GetChild(1).GetComponent<TMP_Text>()?.SetText("");
-            }
+            
 
+            //클릭 이벤트 할당
             button.GetComponent<Button>().onClick.AddListener(() => ButtonClicked(button));
-
         }
+        #endregion
     }
 
+    /// <summary>
+    /// 인벤 데이터 저장
+    /// </summary>
     public void SaveLobbyInventory() {
         Class_SaveData class_SaveData = new Class_SaveData();
         class_SaveData.money = 100;
+        Debug.LogWarning("사용자 자원 저장 변경 필요");
         class_SaveData.items = SaveData;
         string jdata2 = JsonUtility.ToJson(class_SaveData);
         File.WriteAllText(Application.dataPath + "/Resources/SaveData.txt", jdata2);
