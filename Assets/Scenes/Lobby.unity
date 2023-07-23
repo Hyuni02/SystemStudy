@@ -157,7 +157,7 @@ RectTransform:
   - {fileID: 1846676970}
   - {fileID: 1236997012}
   m_Father: {fileID: 397855912}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -313,7 +313,7 @@ RectTransform:
   m_Children:
   - {fileID: 406623296}
   m_Father: {fileID: 397855912}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1009,7 +1009,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Buy/Sale
+  m_text: 'Buy/Sell
 
 '
   m_isRightToLeft: 0
@@ -1200,7 +1200,7 @@ RectTransform:
   - {fileID: 1606939937}
   - {fileID: 654549436}
   m_Father: {fileID: 397855912}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1387,7 +1387,7 @@ RectTransform:
   - {fileID: 947420780}
   - {fileID: 1289444615}
   m_Father: {fileID: 397855912}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -1944,6 +1944,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 0
+  ClickBlocker: {fileID: 1691616427}
   Content_SelectedCharacterInventory: {fileID: 136065923}
   Slider_SelectedCharacter: {fileID: 632271585}
   Panel_Inven: {fileID: 1238283682}
@@ -1971,7 +1972,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pre_Button: {fileID: 3420898743806043673, guid: d58f663f036ea5747aa0ea2e8675849e,
     type: 3}
-  Panel_SaleList: {fileID: 671476967}
+  Panel_SellList: {fileID: 671476967}
 --- !u!114 &234471161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2066,12 +2067,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a94225fab5ee2b34bb556c1a70c27fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Panel_BuySale: {fileID: 1747067937}
+  Panel_BuySell: {fileID: 1747067937}
   Image_Item: {fileID: 1445477725}
   Text_ItemName: {fileID: 1109101077}
   Text_ItemCost: {fileID: 403348133}
   InputField_Count: {fileID: 1073940261}
-  Button_buysale: {fileID: 1660698548}
+  Button_buySell: {fileID: 1660698548}
 --- !u!1 &241189946
 GameObject:
   m_ObjectHideFlags: 0
@@ -2136,7 +2137,7 @@ RectTransform:
   m_Children:
   - {fileID: 1470401226}
   m_Father: {fileID: 397855912}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -2497,7 +2498,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 397855912}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2793,6 +2794,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1691616428}
   - {fileID: 1049854526}
   - {fileID: 248000875}
   - {fileID: 1121281206}
@@ -4386,7 +4388,7 @@ RectTransform:
   m_Children:
   - {fileID: 1636485680}
   m_Father: {fileID: 397855912}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -7541,7 +7543,7 @@ RectTransform:
   m_Children:
   - {fileID: 1460319398}
   m_Father: {fileID: 397855912}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -8733,7 +8735,7 @@ RectTransform:
   m_Children:
   - {fileID: 1663518618}
   m_Father: {fileID: 397855912}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -10307,7 +10309,7 @@ RectTransform:
   - {fileID: 1689629651}
   - {fileID: 1119254018}
   m_Father: {fileID: 397855912}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -10411,7 +10413,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 397855912}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11450,7 +11452,7 @@ RectTransform:
   - {fileID: 717592307}
   - {fileID: 1501648190}
   m_Father: {fileID: 397855912}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -12790,7 +12792,7 @@ RectTransform:
   - {fileID: 1966864732}
   - {fileID: 710813978}
   m_Father: {fileID: 397855912}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -13835,7 +13837,7 @@ GameObject:
   - component: {fileID: 1660698549}
   - component: {fileID: 1660698548}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Button_BuySell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13908,7 +13910,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 234471166}
         m_TargetAssemblyTypeName: StoreController, Assembly-CSharp
-        m_MethodName: Button_BuySale
+        m_MethodName: Button_BuySell
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14310,6 +14312,82 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target_Inventory: 
+--- !u!1 &1691616427
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1691616428}
+  - component: {fileID: 1691616430}
+  - component: {fileID: 1691616429}
+  m_Layer: 5
+  m_Name: Panel_ClickBlocker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1691616428
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691616427}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 397855912}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1691616429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691616427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1691616430
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1691616427}
+  m_CullTransparentMesh: 1
 --- !u!1 &1700240467
 GameObject:
   m_ObjectHideFlags: 0
@@ -14343,7 +14421,7 @@ RectTransform:
   m_Children:
   - {fileID: 947237429}
   m_Father: {fileID: 397855912}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -14476,7 +14554,7 @@ RectTransform:
   m_Children:
   - {fileID: 794975969}
   m_Father: {fileID: 397855912}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -14698,7 +14776,7 @@ GameObject:
   - component: {fileID: 1747067939}
   - component: {fileID: 1747067938}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Panel_BuySell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14723,7 +14801,7 @@ RectTransform:
   - {fileID: 1660698547}
   - {fileID: 1053961250}
   m_Father: {fileID: 397855912}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -17512,7 +17590,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 397855912}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

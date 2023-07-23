@@ -10,26 +10,36 @@ public class LoadStoreItemList : MonoBehaviour
     [Header("Prefab")]
     public GameObject pre_Button;
 
-    public Transform Panel_SaleList;
+    public Transform Panel_SellList;
+    public List<Dictionary<string, object>> Data_Sell;
 
     public void Start() {
+        Data_Sell = CSVReader.Read("StoreItemsData");
         UpdateStoreItemList();
     }
 
+    public int GetItemPrice(int code, string type) {
+        foreach(var item in Data_Sell) {
+            if ((int)item["Code"] == code) {
+                return (int)item[type];
+            }
+        }
+        Debug.LogError("아이템 가격 검색 실패");
+        return -1;
+    }
+
     public void UpdateStoreItemList() {
-
-        List<Dictionary<string, object>> Data_Sale = CSVReader.Read("StoreItemsData");
-
-        foreach (var item in Data_Sale) {
-            //print(item["Code"].ToString() + " : " + item["Cost"].ToString());
+        foreach (var item in Data_Sell) {
+            //print(item["Code"].ToString() + " : " + item["Buy"].ToString());
             GameObject button = Instantiate(pre_Button);
-            button.transform.SetParent(Panel_SaleList, false);
+            button.transform.SetParent(Panel_SellList, false);
             button.AddComponent<Item>();
             button.GetComponent<Item>().itemname = LoadItemData.instance.GetItemData(int.Parse(item["Code"].ToString())).name;
             button.GetComponent<Item>().code = int.Parse(item["Code"].ToString());
             button.name = button.GetComponent<Item>().itemname;
             button.transform.GetChild(0).GetComponent<TMP_Text>().SetText(button.GetComponent<Item>().name);
-            button.transform.GetChild(1).GetComponent<TMP_Text>().SetText(item["Cost"].ToString());
+            int price = GetItemPrice(button.GetComponent<Item>().code, "Buy");
+            button.transform.GetChild(1).GetComponent<TMP_Text>().SetText(price.ToString());
 
             //버튼 이미지 가져오기
             button.GetComponent<Image>().sprite = GetComponent<ItemImageLoader>().GetSprite(int.Parse(item["Code"].ToString()));
