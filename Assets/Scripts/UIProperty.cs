@@ -240,6 +240,7 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
         if (LobbyUIController.instance.index != 0) {
             characterInfoLoader.SaveCharacterInfo(LobbyUIController.selected_dollinfo.name);
             characterInfoLoader.LoadCharacterInfo(LobbyUIController.selected_dollinfo.name);
+            LobbyUIController.instance.ShowMoney();
             LobbyUIController.instance.Open_Panel_SelectedCharacter(LobbyUIController.selected_dollinfo.name);
         }
         lobbyInventoryController.SaveLobbyInventory();

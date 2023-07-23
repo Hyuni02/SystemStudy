@@ -121,11 +121,13 @@ public class LobbyUIController : MonoBehaviour
             panel.gameObject.SetActive(false);
         }
     }
-
+    public void ShowMoney() {
+        if (index == 0 || index == 1)
+            Panels[index].transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<TMP_Text>().SetText(GetComponent<LobbyInventoryController>().money.ToString());
+    }
     void Open_Panel_Inven() {
         GetComponent<LobbyInventoryController>().LoadLobbyInventory();
-        if(index == 0 || index == 1)
-            Panels[index].transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<TMP_Text>().SetText(GetComponent<LobbyInventoryController>().money.ToString());
+        ShowMoney();
         Panel_Inven.SetActive(true);
     }
     public static DollInfo selected_dollinfo = null;
