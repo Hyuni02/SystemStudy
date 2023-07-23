@@ -5,6 +5,7 @@ using System.IO;
 using UnityEngine.Experimental.AI;
 using Mono.CompilerServices.SymbolWriter;
 using System;
+using UnityEngine.SceneManagement;
 using static UnityEditor.Progress;
 
 [Serializable]
@@ -125,6 +126,8 @@ public class CharacterInfoLoader : MonoBehaviour
             //¿˙¿Â
             Characters.Add(an94.name, an94);
             SaveCharacterInfo(an94.name);
+
+            SceneManager.LoadScene("Lobby");
         }
     }
 

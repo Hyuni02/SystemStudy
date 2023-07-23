@@ -80,6 +80,8 @@ public class LobbyInventoryController : MonoBehaviour {
     public float currentCapacity = 0f;
     public List<ItemInfo_compact> SaveData;
 
+    [Header("Money")]
+    public int money;
 
     public void Start() {
         Content_LobbyInventory.transform.parent.GetComponent<InventoryProperty>().Target_Inventory = nameof(SaveData);
@@ -142,6 +144,7 @@ public class LobbyInventoryController : MonoBehaviour {
 
                 SaveData.Add(item);
             }
+            money = 99999;
 
             print("Create New Inventory Data File");
             SaveLobbyInventory();
@@ -153,6 +156,7 @@ public class LobbyInventoryController : MonoBehaviour {
             Class_SaveData loadedData = JsonUtility.FromJson<Class_SaveData>(jdata);
             //money = loadedData.money;
             SaveData = loadedData.items;
+            money = loadedData.money;
             print("Load Lobby Inventory Data");
         }
 
@@ -298,8 +302,7 @@ public class LobbyInventoryController : MonoBehaviour {
     /// </summary>
     public void SaveLobbyInventory() {
         Class_SaveData class_SaveData = new Class_SaveData();
-        class_SaveData.money = 100;
-        Debug.LogWarning("사용자 자원 저장 변경 필요");
+        class_SaveData.money = money;
         class_SaveData.items = SaveData;
         string jdata2 = JsonUtility.ToJson(class_SaveData);
         File.WriteAllText(Application.dataPath + "/Resources/SaveData.txt", jdata2);

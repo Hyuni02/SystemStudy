@@ -1,8 +1,10 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.Rendering;
@@ -102,7 +104,7 @@ public class LobbyUIController : MonoBehaviour
                 case LobbyFacility.FacilityType.RestoreStation:
                     index = 6;
                     Debug.LogWarning("수복시설 열기 미구현");
-                    Panel_SelectedCharacter.SetActive(true);
+                    //Panel_SelectedCharacter.SetActive(true);
                     break;
                 default:
                     Debug.LogError("Wrong Facility Type");
@@ -122,6 +124,8 @@ public class LobbyUIController : MonoBehaviour
 
     void Open_Panel_Inven() {
         GetComponent<LobbyInventoryController>().LoadLobbyInventory();
+        if(index == 0 || index == 1)
+            Panels[index].transform.GetChild(0).GetChild(0).GetChild(1).GetComponent<TMP_Text>().SetText(GetComponent<LobbyInventoryController>().money.ToString());
         Panel_Inven.SetActive(true);
     }
     public static DollInfo selected_dollinfo = null;
