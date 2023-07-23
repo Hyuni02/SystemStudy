@@ -58,10 +58,12 @@ public class LobbyInventoryController : MonoBehaviour {
     public TextAsset InitLobbyInvenData;
     public Image dragImage;
     public int dragCode;
-    [HideInInspector]
+
+    public GameObject selectedButton;
     public int selectedCode;
     [HideInInspector]
     int itemcount = 3;
+
 
     [Header("Debug Slot")]
     public Button btn_Get;
@@ -177,10 +179,13 @@ public class LobbyInventoryController : MonoBehaviour {
     }
     void ButtonClicked(GameObject button) {
         print("Click : " + button.GetComponent<Item>().itemname);
+        selectedButton = button;
         selectedCode = button.GetComponent<Item>().code;
+        if(LobbyUIController.instance.index == 0)
+            GetComponent<StoreController>().Open_Panel();
         //debug
-        string itemName = button.GetComponent<Item>().itemname;
-        txt_Name.SetText(itemName);
+        //string itemName = button.GetComponent<Item>().itemname;
+        //txt_Name.SetText(itemName);
     }
 
     //아이템(버튼)에 데이터 적용

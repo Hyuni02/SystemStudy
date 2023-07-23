@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class Item : MonoBehaviour
 {
     [field : SerializeField]
-    public string itemname { get; private set; }
+    public string itemname { get; set; }
     [field: SerializeField]
-    public int code { get; private set; }
+    public int code { get; set; }
     [field: SerializeField]
     public float volume { get; private set; }
     [field: SerializeField]
