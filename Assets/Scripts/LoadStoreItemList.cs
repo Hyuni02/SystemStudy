@@ -28,6 +28,16 @@ public class LoadStoreItemList : MonoBehaviour
         return -1;
     }
 
+    public int GetItemLimit(int code) {
+        foreach (var item in Data_Sell) {
+            if ((int)item["Code"] == code) {
+                return (int)item["limit"];
+            }
+        }
+        Debug.LogError("아이템 수량 검색 실패");
+        return -1;
+    }
+
     public void UpdateStoreItemList() {
         foreach (var item in Data_Sell) {
             //print(item["Code"].ToString() + " : " + item["Buy"].ToString());

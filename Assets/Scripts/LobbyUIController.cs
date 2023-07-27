@@ -131,7 +131,6 @@ public class LobbyUIController : MonoBehaviour
     }
     void Open_Panel_Inven() {
         GetComponent<LobbyInventoryController>().LoadLobbyInventory();
-        ShowMoney();
         Panel_Inven.SetActive(true);
     }
     public static DollInfo selected_dollinfo = null;

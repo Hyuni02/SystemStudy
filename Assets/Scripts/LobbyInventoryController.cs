@@ -156,13 +156,12 @@ public class LobbyInventoryController : MonoBehaviour {
         else {
             string jdata = File.ReadAllText(Application.dataPath + "/Resources/SaveData.txt");
             Class_SaveData loadedData = JsonUtility.FromJson<Class_SaveData>(jdata);
-            //money = loadedData.money;
             SaveData = loadedData.items;
             money = loadedData.money;
             print("Load Lobby Inventory Data");
         }
 
-
+        GetComponent<LobbyUIController>().ShowMoney();
         Update_CapacitySlider(Slider_Inven, ref SaveData, maxCapacity);
         ShowItems(ref Content_LobbyInventory, ref SaveData);
     }

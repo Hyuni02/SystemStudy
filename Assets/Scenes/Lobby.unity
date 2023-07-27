@@ -2073,6 +2073,7 @@ MonoBehaviour:
   Text_ItemCost: {fileID: 403348133}
   InputField_Count: {fileID: 1073940261}
   Button_buySell: {fileID: 1660698548}
+  itemcount: 1
 --- !u!1 &241189946
 GameObject:
   m_ObjectHideFlags: 0
@@ -3417,7 +3418,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: -1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -15654,7 +15655,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
