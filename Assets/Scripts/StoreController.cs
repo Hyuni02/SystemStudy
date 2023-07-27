@@ -93,33 +93,61 @@ public class StoreController : MonoBehaviour
             }
             print($"구입 : {GetComponent<LobbyInventoryController>().selectedButton.name}\n재화 -{Text_ItemCost.text}");
             GetComponent<LobbyInventoryController>().money -= totalcost;
-            Debug.LogWarning("아이템 획득 미구현");
+            AddItemToInventory();
         }
         Close_Panel();
-        GetComponent<LobbyInventoryController>().SaveLobbyInventory();
-        GetComponent<LobbyInventoryController>().LoadLobbyInventory();
     }
 
     public void AddItemToInventory() {
+        Debug.LogWarning("아이템 획득 미구현");
+        //아이템 추가
+        LobbyInventoryController inventoryController = GetComponent<LobbyInventoryController>();
+        int selectedCode = inventoryController.selectedCode;
+        int max = LoadItemData.instance.GetItemData(selectedCode).stack;
+        int newitemgroup = itemcount / max; //아이템 그룹 수
+        int rests = itemcount % max; //나머지 아이템 수
 
+        if (newitemgroup > 0) {
+            for (int i = 0; i < newitemgroup; i++) {
+                ItemInfo_compact newitem = new ItemInfo_compact();
+                newitem.itemcode = selectedCode;
+                newitem.itemcount = max;
+                inventoryController.SetItemProps(ref newitem);
+                inventoryController.SaveData.Add(newitem);
+            }
+        }
+        if (rests > 0) {
+            ItemInfo_compact restitem = new ItemInfo_compact();
+            restitem.itemcode = selectedCode;
+            restitem.itemcount = rests;
+            inventoryController.SetItemProps(ref restitem);
+            inventoryController.SaveData.Add(restitem);
+        }
+        //인벤토리 새로고침
+        inventoryController.ShowItems(ref inventoryController.Content_LobbyInventory, ref inventoryController.SaveData);
+        //데이터 저장
+        inventoryController.SaveLobbyInventory();
+        inventoryController.LoadLobbyInventory();
     }
 
     public void RemoveItemFromInventroy() {
         //아이템 제거
+        LobbyInventoryController inventoryController = GetComponent<LobbyInventoryController>();
+
         //선택한 아이템이 인벤토리에 있는지 확인
-        var target = GetComponent<LobbyInventoryController>().SaveData[GetComponent<LobbyInventoryController>().selectedButton.GetComponent<UIProperty>().index];
+        var target = inventoryController.SaveData[inventoryController.selectedButton.GetComponent<UIProperty>().index];
 
         //해당 아이템의 수를 1차감
-        target.itemcount--;
+        target.itemcount -= itemcount;
         //차감된 아이템의 수가 0이면 버튼 지우기
         if (target.itemcount == 0) {
-            GetComponent<LobbyInventoryController>().SaveData.Remove(target);
+            inventoryController.SaveData.Remove(target);
         }
         //인벤토리 새로고침
-        GetComponent<LobbyInventoryController>().ShowItems(ref GetComponent<LobbyInventoryController>().Content_LobbyInventory, ref GetComponent<LobbyInventoryController>().SaveData);
+        inventoryController.ShowItems(ref inventoryController.Content_LobbyInventory, ref inventoryController.SaveData);
         //데이터 저장
-        GetComponent<LobbyInventoryController>().SaveLobbyInventory();
-        GetComponent<LobbyInventoryController>().LoadLobbyInventory();
+        inventoryController.SaveLobbyInventory();
+        inventoryController.LoadLobbyInventory();
     }
 
 }
