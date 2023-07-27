@@ -1791,10 +1791,10 @@ GameObject:
   - component: {fileID: 234471162}
   - component: {fileID: 234471163}
   - component: {fileID: 234471160}
+  - component: {fileID: 234471166}
   - component: {fileID: 234471164}
   - component: {fileID: 234471161}
   - component: {fileID: 234471165}
-  - component: {fileID: 234471166}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1958,6 +1958,7 @@ MonoBehaviour:
   - {fileID: 167919041}
   - {fileID: 611475853}
   - {fileID: 1410303090}
+  - {fileID: 1747067936}
 --- !u!114 &234471160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2067,13 +2068,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a94225fab5ee2b34bb556c1a70c27fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemcount: 1
   Panel_BuySell: {fileID: 1747067937}
   Image_Item: {fileID: 1445477725}
   Text_ItemName: {fileID: 1109101077}
   Text_ItemCost: {fileID: 403348133}
   InputField_Count: {fileID: 1073940261}
   Button_buySell: {fileID: 1660698548}
-  itemcount: 1
 --- !u!1 &241189946
 GameObject:
   m_ObjectHideFlags: 0
