@@ -89,7 +89,7 @@ public class LobbyUIController : MonoBehaviour
                     break;
                 case LobbyFacility.FacilityType.CommandTable:
                     index = 2;
-                    Debug.LogWarning("지휘부 열기 미구현");
+                    CommandTableController.instance.OpenCommandTable();
                     break;
                 case LobbyFacility.FacilityType.Table:
                     index = 3;
