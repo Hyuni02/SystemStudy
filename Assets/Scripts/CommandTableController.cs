@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class CommandTableController : MonoBehaviour
@@ -10,6 +11,9 @@ public class CommandTableController : MonoBehaviour
     public static CommandTableController instance;
 
     int characterindex = 0;
+
+    public GameObject Panel_Detail;
+    public GameObject Panel_Summary;
     [Header("About Character")]
     public Image Image_SelectedCharacter;
     public TMP_Text Text_Name;
@@ -28,7 +32,30 @@ public class CommandTableController : MonoBehaviour
     }
 
     public void OpenCommandTable() {
+        
+    }
+
+    public void OpenClose_SummaryTab(bool open) {
+        if (Panel_Detail.activeInHierarchy) return;
+
+        if(open) {
+            Debug.LogWarning("맵 미리보기 미구현");
+            Panel_Summary.SetActive(true);
+        }
+        else {
+            Panel_Summary.SetActive(false);
+        }
+    }
+
+    public void OpenDetailTab() {
+        Debug.LogWarning("맵 세부정보 표시 미구현");
+        Panel_Summary.SetActive(false);
+        Panel_Detail.SetActive(true);
         ShowCharacterInfo();
+    }
+
+    public void CloseDetailTab() {
+        Panel_Detail.SetActive(false);
     }
 
     void ShowCharacterInfo(string _name = "AK-12") {

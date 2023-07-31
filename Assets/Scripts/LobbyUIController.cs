@@ -67,6 +67,10 @@ public class LobbyUIController : MonoBehaviour
         SelectedCharacter_Secondary_Muzzle = Panel_SelectedCharacter.transform.GetChild(4).GetChild(1).GetComponent<EquipmentUI>();
         SelectedCharacter_Secondary_Sight = Panel_SelectedCharacter.transform.GetChild(4).GetChild(2).GetComponent<EquipmentUI>();
         SelectedCharacter_Secondary_Mag = Panel_SelectedCharacter.transform.GetChild(4).GetChild(3).GetComponent<EquipmentUI>();
+
+        foreach(var panel in Panels) {
+            panel.SetActive(false);
+        }
     }
 
     void Update()
