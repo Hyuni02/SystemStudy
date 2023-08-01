@@ -11,9 +11,18 @@ public class CommandTableController : MonoBehaviour
     public static CommandTableController instance;
 
     int characterindex = 0;
+    int preview_level = 0;
+    int selected_level = 0;
+    int selected_stage = 0;
 
     public GameObject Panel_Detail;
     public GameObject Panel_Summary;
+    public Transform summary_content;
+    public GameObject Map_Preview;
+    [Header("About Map")]
+    public Image Image_MapThumbnail;
+    public TMP_Text Text_MapName;
+
     [Header("About Character")]
     public Image Image_SelectedCharacter;
     public TMP_Text Text_Name;
@@ -24,6 +33,7 @@ public class CommandTableController : MonoBehaviour
     public Image Image_Primary;
     public Image Image_Secondary;
 
+    public List<Dictionary<string, object>> List_Map =  new List<Dictionary<string, object>>();
 
     private void Awake() {
         if(instance == null) {
@@ -31,15 +41,28 @@ public class CommandTableController : MonoBehaviour
         }
     }
 
-    public void OpenCommandTable() {
-        
+    private void Start() {
+        List_Map = CSVReader.Read("StageList");
     }
 
+    public void OpenCommandTable() {
+        Panel_Detail.SetActive(false);
+    }
+
+    public void SetPreviewLevel(int level) {
+        preview_level = level;
+    }
     public void OpenClose_SummaryTab(bool open) {
         if (Panel_Detail.activeInHierarchy) return;
-
         if(open) {
-            Debug.LogWarning("맵 미리보기 미구현");
+            ClearContent(summary_content);
+            foreach(var map in List_Map) {
+                if ((int)map["level"] == preview_level) {
+                    GameObject maptile = Instantiate(Map_Preview, summary_content);
+                    maptile.transform.GetComponentInChildren<TMP_Text>().SetText(map["name"].ToString());
+                    Debug.LogWarning("맵 썸내일 넣기 미구현");
+                }
+            }
             Panel_Summary.SetActive(true);
         }
         else {
@@ -47,8 +70,19 @@ public class CommandTableController : MonoBehaviour
         }
     }
 
-    public void OpenDetailTab() {
-        Debug.LogWarning("맵 세부정보 표시 미구현");
+    void ClearContent(Transform content) {
+        for (int i = 0; i < content.childCount; i++) {
+            Destroy(content.GetChild(i).gameObject);
+        }
+    }
+
+    public void OpenDetailTab(int stage = 0) {
+        Debug.LogWarning("맵 썸네일 표시 미구현");
+        foreach(var map in List_Map) {
+            if ((int)map["level"] == selected_level && (int)map["stage"] == stage) {
+                Text_MapName.SetText(map["name"].ToString());
+            }
+        }
         Panel_Summary.SetActive(false);
         Panel_Detail.SetActive(true);
         ShowCharacterInfo();
@@ -91,9 +125,28 @@ public class CommandTableController : MonoBehaviour
             Image_Secondary.sprite = ItemImageLoader.instance.List_ItemImage[2100];
     }
 
+    public void RaidStart() {
+        //level과 stage를 이용해서 맵 데이터에서 찾음
+        print($"level : {selected_level} \n stage : {selected_stage}");
+    }
+
+    public void SetLevel(int level) {
+        selected_level = level;
+        selected_stage = 0;
+        if (Panel_Detail.activeSelf) {
+            OpenDetailTab();
+        }
+    }
+
+    public void ChangeStage(int i) {
+        float next = Mathf.Repeat(selected_stage + i, List_Map.Where(x => (int)x["level"] == selected_level).Count());
+        selected_stage = (int)next;
+        OpenDetailTab((int)next);
+    }
+
     public void ChangeIndex(int i) {
         float next = Mathf.Repeat(characterindex + i, CharacterInfoLoader.instance.Characters.Count);
-        characterindex += i;
+        characterindex = (int)next;
         string name_next = CharacterInfoLoader.instance.Characters.Keys.ElementAt((int)next);
         ShowCharacterInfo(name_next);
     }
