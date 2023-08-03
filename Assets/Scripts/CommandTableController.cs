@@ -36,6 +36,9 @@ public class CommandTableController : MonoBehaviour
     public Image Image_Primary;
     public Image Image_Secondary;
 
+    [Header("Info")]
+    public GameObject Info;
+
     public List<Dictionary<string, object>> List_Map =  new List<Dictionary<string, object>>();
 
     private void Awake() {
@@ -133,6 +136,12 @@ public class CommandTableController : MonoBehaviour
     public void RaidStart() {
         //level과 stage를 이용해서 맵 데이터에서 찾음
         Debug.LogWarning("레이드 진입 데이터 넘겨주기 미구현");
+        //오브젝트 하나 생성
+        RaidInfo info = Instantiate(Info).gameObject.GetComponent<RaidInfo>();
+        //레이드 이름 넣기
+        info.MapName = Text_MapName.text;
+        //진입 캐릭터 이름 넣기
+        info.CharacterName = Text_Name.text;
         SceneManager.LoadScene("InGame");
     }
 

@@ -2358,6 +2358,7 @@ MonoBehaviour:
   Image_Bag: {fileID: 1172966737}
   Image_Primary: {fileID: 109089118}
   Image_Secondary: {fileID: 1214056969}
+  Info: {fileID: 4909409663668957728, guid: bd9506a1a8d37da4faf95392a73eebab, type: 3}
 --- !u!114 &234471168
 MonoBehaviour:
   m_ObjectHideFlags: 0
