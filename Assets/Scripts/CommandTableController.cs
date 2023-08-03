@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CommandTableController : MonoBehaviour
@@ -60,7 +63,7 @@ public class CommandTableController : MonoBehaviour
                 if ((int)map["level"] == preview_level) {
                     GameObject maptile = Instantiate(Map_Preview, summary_content);
                     maptile.transform.GetComponentInChildren<TMP_Text>().SetText(map["name"].ToString());
-                    Debug.LogWarning("맵 썸내일 넣기 미구현");
+                    maptile.transform.GetChild(0).GetComponent<Image>().sprite = MapThumbnailLoader.instance.GetSprite($"{preview_level}-{map["stage"]}");
                 }
             }
             Panel_Summary.SetActive(true);
@@ -77,10 +80,10 @@ public class CommandTableController : MonoBehaviour
     }
 
     public void OpenDetailTab(int stage = 0) {
-        Debug.LogWarning("맵 썸네일 표시 미구현");
         foreach(var map in List_Map) {
             if ((int)map["level"] == selected_level && (int)map["stage"] == stage) {
                 Text_MapName.SetText(map["name"].ToString());
+                Image_MapThumbnail.sprite = MapThumbnailLoader.instance.GetSprite($"{selected_level}-{selected_stage}");
             }
         }
         Panel_Summary.SetActive(false);
@@ -103,6 +106,7 @@ public class CommandTableController : MonoBehaviour
         Debug.LogWarning("캐릭터 레벨 표시 미구현");
 
         //캐릭터 장착 장비 넣기
+        #region
         if (CharacterInfoLoader.instance.Characters[_name].equipInfo.Helmet.itemcode != 0)
             Image_Helmet.sprite = ItemImageLoader.instance.List_ItemImage[CharacterInfoLoader.instance.Characters[_name].equipInfo.Helmet.itemcode];
         else
@@ -123,11 +127,13 @@ public class CommandTableController : MonoBehaviour
             Image_Secondary.sprite = ItemImageLoader.instance.List_ItemImage[CharacterInfoLoader.instance.Characters[_name].equipInfo.Secondary.itemcode];
         else
             Image_Secondary.sprite = ItemImageLoader.instance.List_ItemImage[2100];
+        #endregion
     }
 
     public void RaidStart() {
         //level과 stage를 이용해서 맵 데이터에서 찾음
-        print($"level : {selected_level} \n stage : {selected_stage}");
+        Debug.LogWarning("레이드 진입 데이터 넘겨주기 미구현");
+        SceneManager.LoadScene("InGame");
     }
 
     public void SetLevel(int level) {
