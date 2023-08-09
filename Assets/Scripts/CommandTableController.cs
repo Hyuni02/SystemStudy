@@ -135,13 +135,14 @@ public class CommandTableController : MonoBehaviour
 
     public void RaidStart() {
         //level과 stage를 이용해서 맵 데이터에서 찾음
-        Debug.LogWarning("레이드 진입 데이터 넘겨주기 미구현");
         //오브젝트 하나 생성
         RaidInfo info = Instantiate(Info).gameObject.GetComponent<RaidInfo>();
         //레이드 이름 넣기
         info.MapName = Text_MapName.text;
         //진입 캐릭터 이름 넣기
         info.CharacterName = Text_Name.text;
+        //맵 코드 넣기
+        info.MapCode = $"Level{selected_level}Stage{selected_stage}";
         SceneManager.LoadScene("InGame");
     }
 

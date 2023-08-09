@@ -7,6 +7,7 @@ public class RaidInfo : MonoBehaviour
     public static RaidInfo instance;
 
     public string MapName;
+    public string MapCode;
     public string CharacterName;
 
     private void Awake() {
