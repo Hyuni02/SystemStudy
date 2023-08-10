@@ -25,9 +25,9 @@ public class ItemInfo {
 public class LoadItemData : MonoBehaviour
 {
     public static LoadItemData instance;
-    public TextAsset Data_Items;
+    TextAsset Data_Items;
 
-    [SerializeField]
+    [HideInInspector]
     public List<ItemInfo> Data_Item = new List<ItemInfo>();
 
     private void Awake() {
@@ -47,6 +47,7 @@ public class LoadItemData : MonoBehaviour
     }
 
     public void LoadData() {
+        Data_Items = (TextAsset)Resources.Load("ItemData");
         string[] line = Data_Items.text.Substring(0, Data_Items.text.Length - 1).Split('\n');
         for (int i = 0; i < line.Length; i++) {
             string[] row = line[i].Split("\t");
