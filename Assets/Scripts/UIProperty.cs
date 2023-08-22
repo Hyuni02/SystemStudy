@@ -11,46 +11,49 @@ public class UIProperty : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     public int index = -1;
     
     [Header("Button Property")]
-    public bool b_dragable = false;
-    public bool b_dropable = false;
+    public bool b_dragable = false; //드래그 가능 여부(아이템)
+    public bool b_dropable = false; //드롭 가능 여부(장착칸, 인벤토리, 아이템)
 
     GameObject Main_Camera;
-    LobbyInventoryController lobbyInventoryController = null;
-    CharacterInfoLoader characterInfoLoader = null;
+    LobbyInventoryController lobbyInventoryController = null; //로비 인벤토리
+    CharacterInfoLoader characterInfoLoader = null; //캐릭터 인벤토리
     private void Start() {
         Main_Camera = GameObject.Find("Main Camera");
         lobbyInventoryController = Main_Camera.GetComponent<LobbyInventoryController>();
         characterInfoLoader = Main_Camera.GetComponent<CharacterInfoLoader>();
     }
 
+    //드래그 시작시 호출
     public void OnBeginDrag(PointerEventData eventData) {
         if (!b_dragable) return;
-        lobbyInventoryController.dragImage.gameObject.SetActive(true);
-        lobbyInventoryController.dragImage.GetComponent<Image>().sprite = GetComponent<Image>().sprite;
-        lobbyInventoryController.dragCode = this.GetComponent<Item>() ? this.GetComponent<Item>().code : this.GetComponent<EquipmentUI>().equiped.itemcode;
+        lobbyInventoryController.dragImage.gameObject.SetActive(true); //눈속임용 이미지 활성화(마우스 따라다님)
+        lobbyInventoryController.dragImage.GetComponent<Image>().sprite = GetComponent<Image>().sprite; //눈속임용 이미지에 아이템 이미지 할당
+        lobbyInventoryController.dragCode = this.GetComponent<Item>() ? this.GetComponent<Item>().code : this.GetComponent<EquipmentUI>().equiped.itemcode; //드래그 하는 아이템 정보 가져오기
     }
 
+    //드래그 중 호출
     public void OnDrag(PointerEventData eventData) {
         if (!b_dragable) return;
-
+        //마우스 따라다니기
         PointerEventData pointer_data = (PointerEventData)eventData;
         lobbyInventoryController.dragImage.transform.position = pointer_data.position;
-
     }
 
+    //드래그 종료 시 호출
     public void OnEndDrag(PointerEventData eventData) {
         if (!b_dragable) return;
         ResetDragImage();
     }
+    //눈속임용 이미지 초기화
     void ResetDragImage() {
         lobbyInventoryController.dragImage.gameObject.SetActive(false);
         lobbyInventoryController.dragImage.GetComponent<Image>().sprite = null;
         lobbyInventoryController.dragCode = 0;
     }
-
+    //자신 위에서 드래그가 끝났을 때 호출(드랍 지점)
     public void OnDrop(PointerEventData eventData) {
-        GameObject drag = eventData.pointerDrag.gameObject;
-        GameObject drop = gameObject;
+        GameObject drag = eventData.pointerDrag.gameObject; //드래그 하던 아이템
+        GameObject drop = gameObject; //드롭된 위치의 오브젝트
         print($"{drag.name} : {drop.name}");
 
         //드래그 불가능한 오브젝트를 드래그 (상점 아이템 드래그)
