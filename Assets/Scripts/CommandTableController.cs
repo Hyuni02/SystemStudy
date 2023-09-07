@@ -142,8 +142,8 @@ public class CommandTableController : MonoBehaviour
         //진입 캐릭터 이름 넣기
         info.CharacterName = Text_Name.text;
         //맵 코드 넣기
-        info.MapLevel = selected_level.ToString();
-        info.MapStage = selected_stage.ToString();
+        info.MapLevel = selected_level;
+        info.MapStage = selected_stage;
         SceneManager.LoadScene("InGame");
     }
 
