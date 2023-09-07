@@ -16,7 +16,8 @@ public class InGameController : MonoBehaviour
             gameObject.AddComponent<RaidInfo>();
             GetComponent<RaidInfo>().MapName = "¿¬½À¿ë ¸Ê";
             GetComponent<RaidInfo>().CharacterName = "AK-12";
-            GetComponent<RaidInfo>().MapCode = "LevelDebugStageDebug";
+            GetComponent<RaidInfo>().MapLevel = "Debug";
+            GetComponent<RaidInfo>().MapStage = "Debug";
         }
 
         canvasProperties_InGame.txt_CharacterName.SetText(RaidInfo.instance.CharacterName);

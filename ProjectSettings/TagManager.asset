@@ -12,6 +12,7 @@ TagManager:
   - Selected_Inven
   - Item
   - ItemSpawnPos
+  - PlayerSpawnPos
   layers:
   - Default
   - TransparentFX

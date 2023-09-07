@@ -13,9 +13,9 @@ public class MapDataLoader : MonoBehaviour
         Instance = this;
     }
     private void Start() {
-        MapData = CSVReader.Read($"MapData/{RaidInfo.instance.MapCode}");
+        MapData = CSVReader.Read($"MapData/{RaidInfo.instance.MapLevel}");
         if ( MapData == null) {
-            Debug.LogWarning($"MapData/{RaidInfo.instance.MapCode} 데이터가 존재하지 않음");
+            Debug.LogWarning($"MapData/{RaidInfo.instance.MapLevel} 데이터가 존재하지 않음");
             MapData = CSVReader.Read($"MapData/TempMapData");
         }
         foreach (var i in GameObject.FindGameObjectsWithTag("ItemSpawnPos")) {
